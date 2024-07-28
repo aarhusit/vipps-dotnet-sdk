@@ -186,7 +186,7 @@ namespace Vipps.net.Models.Epayment
         public Amount Amount { get; set; } = new Amount();
 
         [JsonPropertyName("customer")]
-        public Customer2 Customer { get; set; }
+        public Customer Customer { get; set; }
 
         /// <summary>
         /// The type of customer interaction that triggers the purchase.
@@ -1011,7 +1011,7 @@ namespace Vipps.net.Models.Epayment
     {
 
         [JsonPropertyName("customer")]
-        public Customer2 Customer { get; set; }
+        public Customer Customer { get; set; }
 
         /// <summary>
         /// The token value received in the `redirectUrl` property in the Create payment response

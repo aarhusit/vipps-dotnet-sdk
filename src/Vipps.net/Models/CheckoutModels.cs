@@ -22,8 +22,12 @@ namespace Vipps.net.Models.Checkout
 	using System.Collections.Generic;
 	using System.CodeDom.Compiler;
 	using System.Text.Json.Serialization;
+	using System.Text.Json;
 	using System.Runtime.Serialization;
 	using System.Collections.ObjectModel;
+	using System.Threading.Tasks;
+	using System.Threading;
+	using System.ComponentModel.DataAnnotations;
 
     
 
@@ -38,6 +42,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("value")]
+        [Range(0, int.MaxValue)]
         public int Value { get; set; }
 
         /// <summary>
@@ -45,6 +50,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("currency")]
+        [Required(AllowEmptyStrings = true)]
         public string Currency { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -69,6 +75,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("firstName")]
+        [Required(AllowEmptyStrings = true)]
         public string FirstName { get; set; }
 
         /// <summary>
@@ -76,6 +83,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("lastName")]
+        [Required(AllowEmptyStrings = true)]
         public string LastName { get; set; }
 
         /// <summary>
@@ -83,6 +91,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("email")]
+        [Required(AllowEmptyStrings = true)]
         public string Email { get; set; }
 
         /// <summary>
@@ -90,6 +99,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("phoneNumber")]
+        [Required(AllowEmptyStrings = true)]
         public string PhoneNumber { get; set; }
 
         /// <summary>
@@ -220,9 +230,11 @@ namespace Vipps.net.Models.Checkout
         public string Instance { get; set; }
 
         [JsonPropertyName("errorCode")]
+        [Required(AllowEmptyStrings = true)]
         public string ErrorCode { get; set; }
 
         [JsonPropertyName("errors")]
+        [Required]
         public IDictionary<string, ICollection<string>> Errors { get; set; } = new Dictionary<string, ICollection<string>>();
 
         private IDictionary<string, object> _additionalProperties;
@@ -247,6 +259,8 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("vipps-System-Name")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(30)]
         public string VippsSystemName { get; set; }
 
         /// <summary>
@@ -254,6 +268,8 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("vipps-System-Version")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(30)]
         public string VippsSystemVersion { get; set; }
 
         /// <summary>
@@ -261,6 +277,8 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("vipps-System-Plugin-Name")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(30)]
         public string VippsSystemPluginName { get; set; }
 
         /// <summary>
@@ -268,6 +286,8 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("vipps-System-Plugin-Version")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(30)]
         public string VippsSystemPluginVersion { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -289,6 +309,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("supported")]
+        [Required]
         public ICollection<string> Supported { get; set; } = new Collection<string>();
 
         private IDictionary<string, object> _additionalProperties;
@@ -313,6 +334,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("text")]
+        [Required(AllowEmptyStrings = true)]
         public string Text { get; set; }
 
         /// <summary>
@@ -392,6 +414,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("username")]
+        [Required]
         public string Username { get; set; }
 
         /// <summary>
@@ -399,6 +422,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("password")]
+        [Required]
         public string Password { get; set; }
 
         /// <summary>
@@ -427,6 +451,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("amount")]
+        [Required]
         public Amount Amount { get; set; } = new Amount();
 
         [JsonPropertyName("type")]
@@ -437,6 +462,8 @@ namespace Vipps.net.Models.Checkout
         public string CustomType { get; set; }
 
         [JsonPropertyName("brand")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"HELTHJEM")]
         public string Brand { get; set; } = "HELTHJEM";
 
     }
@@ -461,9 +488,11 @@ namespace Vipps.net.Models.Checkout
     {
 
         [JsonPropertyName("merchantInfo")]
+        [Required]
         public PaymentMerchantInfo MerchantInfo { get; set; } = new PaymentMerchantInfo();
 
         [JsonPropertyName("transaction")]
+        [Required]
         public PaymentTransaction Transaction { get; set; } = new PaymentTransaction();
 
         [JsonPropertyName("logistics")]
@@ -501,6 +530,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("token")]
+        [Required(AllowEmptyStrings = true)]
         public string Token { get; set; }
 
         /// <summary>
@@ -508,6 +538,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("checkoutFrontendUrl")]
+        [Required(AllowEmptyStrings = true)]
         public string CheckoutFrontendUrl { get; set; }
 
         /// <summary>
@@ -515,6 +546,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("pollingUrl")]
+        [Required(AllowEmptyStrings = true)]
         public string PollingUrl { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -603,9 +635,12 @@ namespace Vipps.net.Models.Checkout
     {
 
         [JsonPropertyName("id")]
+        [Required]
+        [StringLength(200, MinimumLength = 1)]
         public string Id { get; set; }
 
         [JsonPropertyName("priority")]
+        [Range(0, int.MaxValue)]
         public int Priority { get; set; }
 
         [JsonPropertyName("isDefault")]
@@ -636,6 +671,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("client_id")]
+        [Required]
         public string Client_id { get; set; }
 
         /// <summary>
@@ -643,6 +679,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("client_secret")]
+        [Required]
         public string Client_secret { get; set; }
 
         /// <summary>
@@ -650,6 +687,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("ocp-Apim-Subscription-Key")]
+        [Required]
         public string OcpApimSubscriptionKey { get; set; }
 
         /// <summary>
@@ -657,6 +695,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("merchant-Serial-Number")]
+        [Required]
         public string MerchantSerialNumber { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -681,6 +720,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("streetAddress")]
+        [Required(AllowEmptyStrings = true)]
         public string StreetAddress { get; set; }
 
         /// <summary>
@@ -688,6 +728,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("postalCode")]
+        [Required(AllowEmptyStrings = true)]
         public string PostalCode { get; set; }
 
         /// <summary>
@@ -695,6 +736,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("region")]
+        [Required(AllowEmptyStrings = true)]
         public string Region { get; set; }
 
         /// <summary>
@@ -702,6 +744,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("country")]
+        [Required(AllowEmptyStrings = true)]
         public string Country { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -723,6 +766,8 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("currency")]
+        [Required]
+        [StringLength(3, MinimumLength = 3)]
         public string Currency { get; set; }
 
         /// <summary>
@@ -775,6 +820,8 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("name")]
+        [Required]
+        [StringLength(2048, MinimumLength = 1)]
         public string Name { get; set; }
 
         /// <summary>
@@ -782,6 +829,8 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("id")]
+        [Required]
+        [StringLength(255, MinimumLength = 1)]
         public string Id { get; set; }
 
         /// <summary>
@@ -789,6 +838,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("totalAmount")]
+        [Range(0D, double.MaxValue)]
         public long TotalAmount { get; set; }
 
         /// <summary>
@@ -796,6 +846,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("totalAmountExcludingTax")]
+        [Range(0D, double.MaxValue)]
         public long TotalAmountExcludingTax { get; set; }
 
         /// <summary>
@@ -803,6 +854,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("totalTaxAmount")]
+        [Range(0D, double.MaxValue)]
         public long TotalTaxAmount { get; set; }
 
         /// <summary>
@@ -810,6 +862,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("taxPercentage")]
+        [Range(0, 100)]
         public int TaxPercentage { get; set; }
 
         /// <summary>
@@ -824,6 +877,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("discount")]
+        [Range(0D, double.MaxValue)]
         public long? Discount { get; set; }
 
         /// <summary>
@@ -866,6 +920,8 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("orderLines")]
+        [Required]
+        [MinLength(1)]
         public ICollection<OrderLine> OrderLines { get; set; } = new Collection<OrderLine>();
 
         /// <summary>
@@ -873,6 +929,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("orderBottomLine")]
+        [Required]
         public OrderBottomLine OrderBottomLine { get; set; } = new OrderBottomLine();
 
         private IDictionary<string, object> _additionalProperties;
@@ -894,6 +951,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("unitPrice")]
+        [Range(0D, double.MaxValue)]
         public long UnitPrice { get; set; }
 
         /// <summary>
@@ -901,6 +959,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("quantity")]
+        [Required(AllowEmptyStrings = true)]
         public string Quantity { get; set; }
 
         /// <summary>
@@ -908,6 +967,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("quantityUnit")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public QuantityUnit QuantityUnit { get; set; }
 
@@ -927,6 +987,8 @@ namespace Vipps.net.Models.Checkout
     {
 
         [JsonPropertyName("title")]
+        [Required]
+        [StringLength(200, MinimumLength = 1)]
         public string Title { get; set; }
 
         /// <summary>
@@ -934,9 +996,12 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("amount")]
+        [Required]
         public Amount Amount { get; set; } = new Amount();
 
         [JsonPropertyName("brand")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"OTHER")]
         public string Brand { get; set; } = "OTHER";
 
     }
@@ -949,6 +1014,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("callbackUrl")]
+        [Required(AllowEmptyStrings = true)]
         public string CallbackUrl { get; set; }
 
         /// <summary>
@@ -956,6 +1022,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("returnUrl")]
+        [Required]
         public string ReturnUrl { get; set; }
 
         /// <summary>
@@ -963,6 +1030,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("callbackAuthorizationToken")]
+        [Required(AllowEmptyStrings = true)]
         public string CallbackAuthorizationToken { get; set; }
 
         /// <summary>
@@ -1060,6 +1128,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("amount")]
+        [Required]
         public Amount Amount { get; set; } = new Amount();
 
         /// <summary>
@@ -1067,6 +1136,9 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("reference")]
+        [Required]
+        [StringLength(50, MinimumLength = 8)]
+        [RegularExpression(@"^[-a-zA-Z0-9]*$")]
         public string Reference { get; set; }
 
         /// <summary>
@@ -1074,6 +1146,8 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("paymentDescription")]
+        [Required]
+        [StringLength(100, MinimumLength = 3)]
         public string PaymentDescription { get; set; }
 
         /// <summary>
@@ -1105,6 +1179,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("id")]
+        [Required(AllowEmptyStrings = true)]
         public string Id { get; set; }
 
         /// <summary>
@@ -1112,6 +1187,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("name")]
+        [Required(AllowEmptyStrings = true)]
         public string Name { get; set; }
 
         /// <summary>
@@ -1119,6 +1195,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("address")]
+        [Required(AllowEmptyStrings = true)]
         public string Address { get; set; }
 
         /// <summary>
@@ -1126,6 +1203,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("postalCode")]
+        [Required(AllowEmptyStrings = true)]
         public string PostalCode { get; set; }
 
         /// <summary>
@@ -1133,6 +1211,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("city")]
+        [Required(AllowEmptyStrings = true)]
         public string City { get; set; }
 
         /// <summary>
@@ -1140,6 +1219,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("country")]
+        [Required(AllowEmptyStrings = true)]
         public string Country { get; set; }
 
         /// <summary>
@@ -1171,6 +1251,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("publicToken")]
+        [Required(AllowEmptyStrings = true)]
         public string PublicToken { get; set; }
 
         /// <summary>
@@ -1178,6 +1259,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("apiKey")]
+        [Required]
         public string ApiKey { get; set; }
 
         /// <summary>
@@ -1185,6 +1267,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("origin")]
+        [Required]
         public PorterbuddyOrigin Origin { get; set; } = new PorterbuddyOrigin();
 
         private IDictionary<string, object> _additionalProperties;
@@ -1216,6 +1299,8 @@ namespace Vipps.net.Models.Checkout
         public string CustomType { get; set; }
 
         [JsonPropertyName("brand")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"PORTERBUDDY")]
         public string Brand { get; set; } = "PORTERBUDDY";
 
     }
@@ -1240,6 +1325,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("name")]
+        [Required(AllowEmptyStrings = true)]
         public string Name { get; set; }
 
         /// <summary>
@@ -1247,6 +1333,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("email")]
+        [Required(AllowEmptyStrings = true)]
         public string Email { get; set; }
 
         /// <summary>
@@ -1254,6 +1341,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("phoneNumber")]
+        [Required(AllowEmptyStrings = true)]
         public string PhoneNumber { get; set; }
 
         /// <summary>
@@ -1261,6 +1349,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("address")]
+        [Required]
         public PorterbuddyOriginAddress Address { get; set; } = new PorterbuddyOriginAddress();
 
         private IDictionary<string, object> _additionalProperties;
@@ -1282,6 +1371,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("streetAddress")]
+        [Required(AllowEmptyStrings = true)]
         public string StreetAddress { get; set; }
 
         /// <summary>
@@ -1289,6 +1379,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("postalCode")]
+        [Required(AllowEmptyStrings = true)]
         public string PostalCode { get; set; }
 
         /// <summary>
@@ -1296,6 +1387,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("city")]
+        [Required(AllowEmptyStrings = true)]
         public string City { get; set; }
 
         /// <summary>
@@ -1303,6 +1395,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("country")]
+        [Required(AllowEmptyStrings = true)]
         public string Country { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1324,6 +1417,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("amount")]
+        [Required]
         public Amount Amount { get; set; } = new Amount();
 
         [JsonPropertyName("type")]
@@ -1334,6 +1428,8 @@ namespace Vipps.net.Models.Checkout
         public string CustomType { get; set; }
 
         [JsonPropertyName("brand")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"POSTEN")]
         public string Brand { get; set; } = "POSTEN";
 
     }
@@ -1361,6 +1457,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("amount")]
+        [Required]
         public Amount Amount { get; set; } = new Amount();
 
         [JsonPropertyName("type")]
@@ -1371,6 +1468,8 @@ namespace Vipps.net.Models.Checkout
         public string CustomType { get; set; }
 
         [JsonPropertyName("brand")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"POSTI")]
         public string Brand { get; set; } = "POSTI";
 
     }
@@ -1395,6 +1494,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("amount")]
+        [Required]
         public Amount Amount { get; set; } = new Amount();
 
         [JsonPropertyName("type")]
@@ -1405,6 +1505,8 @@ namespace Vipps.net.Models.Checkout
         public string CustomType { get; set; }
 
         [JsonPropertyName("brand")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"POSTNORD")]
         public string Brand { get; set; } = "POSTNORD";
 
     }
@@ -1526,9 +1628,11 @@ namespace Vipps.net.Models.Checkout
     {
 
         [JsonPropertyName("amount")]
+        [Required]
         public Amount Amount { get; set; } = new Amount();
 
         [JsonPropertyName("state")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PaymentState State { get; set; }
 
@@ -1557,6 +1661,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("sessionId")]
+        [Required(AllowEmptyStrings = true)]
         public string SessionId { get; set; }
 
         /// <summary>
@@ -1571,6 +1676,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("reference")]
+        [Required(AllowEmptyStrings = true)]
         public string Reference { get; set; }
 
         /// <summary>
@@ -1578,6 +1684,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("sessionState")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ExternalSessionState SessionState { get; set; }
 
@@ -1754,6 +1861,7 @@ namespace Vipps.net.Models.Checkout
         /// </summary>
 
         [JsonPropertyName("sub")]
+        [Required(AllowEmptyStrings = true)]
         public string Sub { get; set; }
 
         /// <summary>
@@ -1774,6 +1882,42 @@ namespace Vipps.net.Models.Checkout
 
     }
 
+
+
+    [GeneratedCode("NSwag", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApiException : System.Exception
+    {
+        public int StatusCode { get; private set; }
+
+        public string Response { get; private set; }
+
+        public IReadOnlyDictionary<string, IEnumerable<string>> Headers { get; private set; }
+
+        public ApiException(string message, int statusCode, string response, IReadOnlyDictionary<string, IEnumerable<string>> headers, System.Exception innerException)
+            : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 512 ? 512 : response.Length)), innerException)
+        {
+            StatusCode = statusCode;
+            Response = response;
+            Headers = headers;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("HTTP Response: \n\n{0}\n\n{1}", Response, base.ToString());
+        }
+    }
+
+    [GeneratedCode("NSwag", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApiException<TResult> : ApiException
+    {
+        public TResult Result { get; private set; }
+
+        public ApiException(string message, int statusCode, string response, IReadOnlyDictionary<string, IEnumerable<string>> headers, TResult result, System.Exception innerException)
+            : base(message, statusCode, response, headers, innerException)
+        {
+            Result = result;
+        }
+    }
 
 }
 

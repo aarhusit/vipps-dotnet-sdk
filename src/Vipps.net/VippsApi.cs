@@ -10,6 +10,7 @@ namespace Vipps.net
     {
         IVippsEpaymentService EpaymentService { get; }
         IVippsCheckoutService CheckoutService { get; }
+        IVippsRecurringService RecurringService { get; }
     }
 
     public class VippsApi : IVippsApi
@@ -17,8 +18,6 @@ namespace Vipps.net
         private readonly VippsConfigurationOptions _vippsConfigurationOptions;
         private readonly VippsHttpClient _vippsHttpClient;
         private readonly VippsAccessTokenService _accessTokenService;
-        private readonly IVippsEpaymentService _epaymentService;
-        private readonly IVippsCheckoutService _checkoutService;
         private readonly ILoggerFactory _loggerFactory;
 
         public VippsApi(
@@ -41,7 +40,7 @@ namespace Vipps.net
                 new AccessTokenCacheService()
             );
 
-            _epaymentService = new VippsEpaymentService(
+            EpaymentService = new VippsEpaymentService(
                 new EpaymentServiceClient(
                     _vippsConfigurationOptions,
                     _vippsHttpClient,
@@ -50,23 +49,28 @@ namespace Vipps.net
                 )
             );
 
-            _checkoutService = new VippsCheckoutService(
+            CheckoutService = new VippsCheckoutService(
                 new CheckoutServiceClient(
                     _vippsConfigurationOptions,
                     _vippsHttpClient,
                     _loggerFactory
                 )
             );
+
+            RecurringService = new VippsRecurringService(
+                new RecurringServiceClient(
+                    _vippsConfigurationOptions,
+                    _vippsHttpClient,
+                    _accessTokenService,
+                    _loggerFactory
+                )
+            );
         }
 
-        public IVippsEpaymentService EpaymentService
-        {
-            get { return _epaymentService; }
-        }
+        public IVippsEpaymentService EpaymentService { get; }
 
-        public IVippsCheckoutService CheckoutService
-        {
-            get { return _checkoutService; }
-        }
+        public IVippsCheckoutService CheckoutService { get; }
+
+        public IVippsRecurringService RecurringService { get; }
     }
 }

@@ -7,42 +7,18 @@ using Vipps.net.Helpers;
 
 namespace Vipps.net.Infrastructure
 {
-    public class VippsHttpClient : IVippsHttpClient
+    public class VippsHttpClient(HttpClient httpClient, VippsConfigurationOptions options) : IVippsHttpClient
     {
-        private HttpClient _httpClient;
-        private readonly TimeSpan DefaultTimeOut = TimeSpan.FromSeconds(100);
-        private readonly VippsConfigurationOptions _options;
-
-        public VippsHttpClient(HttpClient httpClient, VippsConfigurationOptions options)
-        {
-            _httpClient = httpClient;
-            _options = options;
-        }
+        private readonly TimeSpan _defaultTimeOut = TimeSpan.FromSeconds(100);
 
         public Uri BaseAddress
         {
             get { return HttpClient.BaseAddress; }
         }
 
-        internal HttpClient HttpClient
-        {
-            get
-            {
-#pragma warning disable IDE0074 // Use compound assignment // Cannot, because of language level
-                if (_httpClient == null)
-                {
-                    _httpClient = CreateDefaultHttpClient();
-                }
-#pragma warning restore IDE0074 // Use compound assignment
+        internal HttpClient HttpClient => httpClient ??= CreateDefaultHttpClient();
 
-                return _httpClient;
-            }
-        }
-
-        public async Task<HttpResponseMessage> SendAsync(
-            HttpRequestMessage request,
-            CancellationToken cancellationToken
-        )
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             var headers = GetHeaders();
             foreach (var header in headers)
@@ -63,10 +39,10 @@ namespace Vipps.net.Infrastructure
 
         private HttpClient CreateDefaultHttpClient()
         {
-            var httpClient = new HttpClient()
+            var httpClient = new HttpClient
             {
-                Timeout = DefaultTimeOut,
-                BaseAddress = new Uri(UrlHelper.GetBaseUrl(_options.UseTestMode))
+                Timeout = _defaultTimeOut,
+                BaseAddress = new Uri(UrlHelper.GetBaseUrl(options.UseTestMode))
             };
 
             return httpClient;
@@ -81,19 +57,9 @@ namespace Vipps.net.Infrastructure
                 { "User-Agent", $"Vipps/DotNet SDK/{assemblyVersion}" },
                 { "Vipps-System-Name", assemblyName.Name },
                 { "Vipps-System-Version", assemblyVersion },
-                { "Merchant-Serial-Number", _options.MerchantSerialNumber },
-                {
-                    "Vipps-System-Plugin-Name",
-                    string.IsNullOrWhiteSpace(_options.PluginName)
-                        ? "acme-plugin"
-                        : _options.PluginName
-                },
-                {
-                    "Vipps-System-Plugin-Version",
-                    string.IsNullOrWhiteSpace(_options.PluginVersion)
-                        ? "0.0.1"
-                        : _options.PluginVersion
-                }
+                { "Merchant-Serial-Number", options.MerchantSerialNumber },
+                { "Vipps-System-Plugin-Name", string.IsNullOrWhiteSpace(options.PluginName) ? "acme-plugin" : options.PluginName },
+                { "Vipps-System-Plugin-Version", string.IsNullOrWhiteSpace(options.PluginVersion) ? "0.0.1" : options.PluginVersion }
             };
         }
     }

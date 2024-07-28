@@ -22,8 +22,12 @@ namespace Vipps.net.Models.Recurring
 	using System.Collections.Generic;
 	using System.CodeDom.Compiler;
 	using System.Text.Json.Serialization;
+	using System.Text.Json;
 	using System.Runtime.Serialization;
 	using System.Collections.ObjectModel;
+	using System.Threading.Tasks;
+	using System.Threading;
+	using System.ComponentModel.DataAnnotations;
 
     
 
@@ -150,9 +154,11 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("occurred")]
+        [Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset Occurred { get; set; }
 
         [JsonPropertyName("event")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ChargeEventEvent Event { get; set; }
 
@@ -170,6 +176,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("idempotencyKey")]
+        [Required(AllowEmptyStrings = true)]
         public string IdempotencyKey { get; set; }
 
         /// <summary>
@@ -273,6 +280,9 @@ namespace Vipps.net.Models.Recurring
         public CampaignV2 Campaign { get; set; }
 
         [JsonPropertyName("currency")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(3, MinimumLength = 3)]
+        [RegularExpression(@"^[A-Z]{3}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Currency Currency { get; set; }
 
@@ -286,12 +296,16 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("customerPhoneNumber")]
+        [StringLength(15, MinimumLength = 10)]
+        [RegularExpression(@"^\d{10,15}$")]
         public string CustomerPhoneNumber { get; set; }
 
         [JsonPropertyName("initialCharge")]
         public InitialChargeV2 InitialCharge { get; set; }
 
         [JsonPropertyName("interval")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"^(YEAR|MONTH|WEEK|DAY)$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Interval Interval { get; set; }
 
@@ -302,6 +316,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("intervalCount")]
+        [Range(1, 31)]
         public int IntervalCount { get; set; }
 
         /// <summary>
@@ -329,6 +344,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("merchantAgreementUrl")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(1024)]
         public string MerchantAgreementUrl { get; set; }
 
         /// <summary>
@@ -338,6 +355,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("merchantRedirectUrl")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(1024)]
         public string MerchantRedirectUrl { get; set; }
 
         /// <summary>
@@ -355,6 +374,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productName")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(45)]
         public string ProductName { get; set; }
 
         /// <summary>
@@ -362,6 +383,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productDescription")]
+        [StringLength(100)]
         public string ProductDescription { get; set; }
 
         /// <summary>
@@ -414,6 +436,7 @@ namespace Vipps.net.Models.Recurring
         public CampaignV3 Campaign { get; set; }
 
         [JsonPropertyName("pricing")]
+        [Required]
         public PricingRequest Pricing { get; set; } = new PricingRequest();
 
         /// <summary>
@@ -422,12 +445,14 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("phoneNumber")]
+        [StringLength(15)]
         public string PhoneNumber { get; set; }
 
         [JsonPropertyName("initialCharge")]
         public InitialChargeV3 InitialCharge { get; set; }
 
         [JsonPropertyName("interval")]
+        [Required]
         public TimePeriod Interval { get; set; } = new TimePeriod();
 
         /// <summary>
@@ -455,6 +480,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("merchantAgreementUrl")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(1024)]
         public string MerchantAgreementUrl { get; set; }
 
         /// <summary>
@@ -464,6 +491,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("merchantRedirectUrl")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(1024)]
         public string MerchantRedirectUrl { get; set; }
 
         /// <summary>
@@ -471,6 +500,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productName")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(45)]
         public string ProductName { get; set; }
 
         /// <summary>
@@ -478,6 +509,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productDescription")]
+        [StringLength(100)]
         public string ProductDescription { get; set; }
 
         /// <summary>
@@ -518,6 +550,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("externalId")]
+        [StringLength(64, MinimumLength = 1)]
+        [RegularExpression(@"^.{1,64}$")]
         public string ExternalId { get; set; }
 
         /// <summary>
@@ -525,6 +559,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("countryCode")]
+        [RegularExpression(@"^[A-Z]{2}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public DraftAgreementV3CountryCode CountryCode { get; set; }
 
@@ -549,6 +584,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("agreementResource")]
+        [Required(AllowEmptyStrings = true)]
         public string AgreementResource { get; set; }
 
         /// <summary>
@@ -558,6 +594,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("agreementId")]
+        [Required(AllowEmptyStrings = true)]
         public string AgreementId { get; set; }
 
         /// <summary>
@@ -568,6 +605,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("vippsConfirmationUrl")]
+        [Required(AllowEmptyStrings = true)]
         public string VippsConfirmationUrl { get; set; }
 
         /// <summary>
@@ -576,6 +614,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("chargeId")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"^[a-zA-Z0-9-]{1,50}$")]
         public string ChargeId { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -590,7 +630,7 @@ namespace Vipps.net.Models.Recurring
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class DraftAgreementResponseV3
+    public partial record DraftAgreementResponseV3
     {
         /// <summary>
         /// Id of a an agreement which user may agree to.
@@ -599,6 +639,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("agreementId")]
+        [Required(AllowEmptyStrings = true)]
         public string AgreementId { get; set; }
 
         /// <summary>
@@ -606,6 +647,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("uuid")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")]
         public System.Guid Uuid { get; set; }
 
         /// <summary>
@@ -624,6 +667,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("chargeId")]
+        [RegularExpression(@"^[a-zA-Z0-9-]{1,50}$")]
         public string ChargeId { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -645,6 +689,8 @@ namespace Vipps.net.Models.Recurring
         public CampaignV2 Campaign { get; set; }
 
         [JsonPropertyName("currency")]
+        [StringLength(3, MinimumLength = 3)]
+        [RegularExpression(@"^[A-Z]{3}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Currency Currency { get; set; }
 
@@ -653,9 +699,13 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("id")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(36)]
         public string Id { get; set; }
 
         [JsonPropertyName("interval")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"^(YEAR|MONTH|WEEK|DAY)$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Interval Interval { get; set; }
 
@@ -664,6 +714,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("intervalCount")]
+        [Range(1, 31)]
         public int IntervalCount { get; set; }
 
         /// <summary>
@@ -674,6 +725,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("price")]
+        [Range(0, int.MaxValue)]
         public int Price { get; set; }
 
         /// <summary>
@@ -681,6 +733,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productName")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(45)]
         public string ProductName { get; set; }
 
         /// <summary>
@@ -688,6 +742,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productDescription")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(100)]
         public string ProductDescription { get; set; }
 
         /// <summary>
@@ -754,13 +810,14 @@ namespace Vipps.net.Models.Recurring
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class AgreementResponseV3
+    public partial record AgreementResponseV3
     {
 
         [JsonPropertyName("campaign")]
         public CampaignResponseV3 Campaign { get; set; }
 
         [JsonPropertyName("pricing")]
+        [Required]
         public PricingResponse Pricing { get; set; }
 
         /// <summary>
@@ -768,9 +825,12 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("id")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(36)]
         public string Id { get; set; }
 
         [JsonPropertyName("interval")]
+        [Required]
         public TimePeriodResponse Interval { get; set; } = new TimePeriodResponse();
 
         /// <summary>
@@ -778,6 +838,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productName")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(45)]
         public string ProductName { get; set; }
 
         /// <summary>
@@ -785,6 +847,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productDescription")]
+        [StringLength(100)]
         public string ProductDescription { get; set; }
 
         /// <summary>
@@ -793,6 +856,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("created")]
+        [Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset Created { get; set; }
 
         /// <summary>
@@ -826,6 +890,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("merchantAgreementUrl")]
+        [Required(AllowEmptyStrings = true)]
         public string MerchantAgreementUrl { get; set; }
 
         /// <summary>
@@ -835,6 +900,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("merchantRedirectUrl")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(1024)]
         public string MerchantRedirectUrl { get; set; }
 
         /// <summary>
@@ -860,6 +927,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("externalId")]
+        [StringLength(64, MinimumLength = 1)]
+        [RegularExpression(@"^.{1,64}$")]
         public string ExternalId { get; set; }
 
         /// <summary>
@@ -867,6 +936,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("countryCode")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"^[A-Z]{2}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public AgreementResponseV3CountryCode CountryCode { get; set; }
 
@@ -875,6 +946,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("uuid")]
+        [Required(AllowEmptyStrings = true)]
+        [RegularExpression(@"^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")]
         public System.Guid Uuid { get; set; }
 
         /// <summary>
@@ -909,6 +982,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("suggestedMaxAmount")]
+        [Range(100, 2000000)]
         public int SuggestedMaxAmount { get; set; }
 
         [JsonPropertyName("campaign")]
@@ -922,6 +996,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("price")]
+        [Range(0, int.MaxValue)]
         public int Price { get; set; }
 
         /// <summary>
@@ -929,6 +1004,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productName")]
+        [StringLength(45)]
         public string ProductName { get; set; }
 
         /// <summary>
@@ -936,6 +1012,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productDescription")]
+        [StringLength(100)]
         public string ProductDescription { get; set; }
 
         /// <summary>
@@ -950,6 +1027,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("merchantAgreementUrl")]
+        [StringLength(1024)]
         public string MerchantAgreementUrl { get; set; }
 
         /// <summary>
@@ -979,6 +1057,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productName")]
+        [StringLength(45)]
         public string ProductName { get; set; }
 
         /// <summary>
@@ -986,6 +1065,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("productDescription")]
+        [StringLength(100)]
         public string ProductDescription { get; set; }
 
         /// <summary>
@@ -1000,6 +1080,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("merchantAgreementUrl")]
+        [StringLength(1024)]
         public string MerchantAgreementUrl { get; set; }
 
         /// <summary>
@@ -1009,6 +1090,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("externalId")]
+        [StringLength(64, MinimumLength = 1)]
+        [RegularExpression(@"^.{1,64}$")]
         public string ExternalId { get; set; }
 
         /// <summary>
@@ -1053,6 +1136,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("agreementId")]
+        [Required(AllowEmptyStrings = true)]
         public string AgreementId { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1077,6 +1161,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("suggestedMaxAmount")]
+        [Range(100, 2000000)]
         public int SuggestedMaxAmount { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1146,6 +1231,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("end")]
+        [Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset End { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1222,6 +1308,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("type")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PriceCampaignV3Type Type { get; set; }
 
@@ -1241,6 +1328,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("end")]
+        [Required(AllowEmptyStrings = true)]
         public string End { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1262,6 +1350,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("type")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PeriodCampaignV3Type Type { get; set; }
 
@@ -1276,6 +1365,7 @@ namespace Vipps.net.Models.Recurring
         public int Price { get; set; }
 
         [JsonPropertyName("period")]
+        [Required]
         public TimePeriod Period { get; set; } = new TimePeriod();
 
         private IDictionary<string, object> _additionalProperties;
@@ -1297,6 +1387,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("type")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public EventCampaignV3Type Type { get; set; }
 
@@ -1315,6 +1406,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("eventDate")]
+        [Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset EventDate { get; set; }
 
         /// <summary>
@@ -1322,6 +1414,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("eventText")]
+        [Required(AllowEmptyStrings = true)]
         public string EventText { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1343,6 +1436,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("type")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public FullFlexCampaignV3Type Type { get; set; }
 
@@ -1357,6 +1451,7 @@ namespace Vipps.net.Models.Recurring
         public int Price { get; set; }
 
         [JsonPropertyName("interval")]
+        [Required]
         public TimePeriod Interval { get; set; } = new TimePeriod();
 
         /// <summary>
@@ -1365,6 +1460,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("end")]
+        [Required(AllowEmptyStrings = true)]
         public string End { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1401,6 +1497,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("type")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PeriodCampaignResponseV3Type Type { get; set; }
 
@@ -1420,9 +1517,11 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("end")]
+        [Required(AllowEmptyStrings = true)]
         public string End { get; set; }
 
         [JsonPropertyName("period")]
+        [Required]
         public TimePeriod Period { get; set; } = new TimePeriod();
 
         /// <summary>
@@ -1451,6 +1550,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("type")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public EventCampaignResponseV3Type Type { get; set; }
 
@@ -1469,6 +1569,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("eventDate")]
+        [Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset EventDate { get; set; }
 
         /// <summary>
@@ -1476,6 +1577,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("eventText")]
+        [Required(AllowEmptyStrings = true)]
         public string EventText { get; set; }
 
         /// <summary>
@@ -1504,6 +1606,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("type")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public FullFlexCampaignResponseV3Type Type { get; set; }
 
@@ -1523,9 +1626,11 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("end")]
+        [Required(AllowEmptyStrings = true)]
         public string End { get; set; }
 
         [JsonPropertyName("interval")]
+        [Required]
         public TimePeriod Interval { get; set; } = new TimePeriod();
 
         /// <summary>
@@ -1554,6 +1659,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("type")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LegacyCampaignResponseV3Type Type { get; set; }
 
@@ -1573,6 +1679,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("end")]
+        [Required(AllowEmptyStrings = true)]
         public string End { get; set; }
 
         /// <summary>
@@ -1605,6 +1712,9 @@ namespace Vipps.net.Models.Recurring
         public PricingRequestType Type { get; set; } = Vipps.net.Models.Recurring.PricingRequestType.LEGACY;
 
         [JsonPropertyName("currency")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(3, MinimumLength = 3)]
+        [RegularExpression(@"^[A-Z]{3}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public CurrencyV3 Currency { get; set; }
 
@@ -1616,7 +1726,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("amount")]
-        public int Amount { get; set; }
+        [Range(100, int.MaxValue)]
+        public int? Amount { get; set; }
 
         /// <summary>
         /// The suggested max amount that the customer should choose, required if type is VARIABLE.
@@ -1626,6 +1737,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("suggestedMaxAmount")]
+        [Range(100, 2000000)]
         public int SuggestedMaxAmount { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1662,10 +1774,14 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("type")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public VariableAmountPricingResponseType Type { get; set; }
 
         [JsonPropertyName("currency")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(3, MinimumLength = 3)]
+        [RegularExpression(@"^[A-Z]{3}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Currency Currency { get; set; }
 
@@ -1711,6 +1827,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("amount")]
+        [Range(100, int.MaxValue)]
         public int Amount { get; set; }
 
         /// <summary>
@@ -1721,6 +1838,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("suggestedMaxAmount")]
+        [Range(100, 2000000)]
         public int SuggestedMaxAmount { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1752,6 +1870,9 @@ namespace Vipps.net.Models.Recurring
         public int Amount { get; set; }
 
         [JsonPropertyName("currency")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(3, MinimumLength = 3)]
+        [RegularExpression(@"^[A-Z]{3}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Currency Currency { get; set; }
 
@@ -1760,6 +1881,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("description")]
+        [Required(AllowEmptyStrings = true)]
         public string Description { get; set; }
 
         /// <summary>
@@ -1767,6 +1889,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("transactionType")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public InitialChargeV2TransactionType TransactionType { get; set; }
 
@@ -1813,6 +1936,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("description")]
+        [Required(AllowEmptyStrings = true)]
         public string Description { get; set; }
 
         /// <summary>
@@ -1820,6 +1944,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("transactionType")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public InitialChargeV3TransactionType TransactionType { get; set; }
 
@@ -1840,6 +1965,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("externalId")]
+        [StringLength(64, MinimumLength = 1)]
+        [RegularExpression(@"^.{1,64}$")]
         public string ExternalId { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1864,9 +1991,13 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("amount")]
+        [Range(100, int.MaxValue)]
         public int Amount { get; set; }
 
         [JsonPropertyName("currency")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(3, MinimumLength = 3)]
+        [RegularExpression(@"^[A-Z]{3}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Currency Currency { get; set; }
 
@@ -1875,6 +2006,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("description")]
+        [Required(AllowEmptyStrings = true)]
         public string Description { get; set; }
 
         /// <summary>
@@ -1883,6 +2015,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("due")]
+        [Required(AllowEmptyStrings = true)]
         public string Due { get; set; }
 
         /// <summary>
@@ -1892,6 +2025,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("retryDays")]
+        [Range(0, 14)]
         public int RetryDays { get; set; }
 
         /// <summary>
@@ -1902,6 +2036,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("orderId")]
+        [RegularExpression(@"^[a-zA-Z\d-]+")]
         public string OrderId { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1926,9 +2061,11 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("amount")]
+        [Range(100, int.MaxValue)]
         public int Amount { get; set; }
 
         [JsonPropertyName("transactionType")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public TransactionType TransactionType { get; set; }
 
@@ -1937,6 +2074,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("description")]
+        [Required(AllowEmptyStrings = true)]
         public string Description { get; set; }
 
         /// <summary>
@@ -1952,6 +2090,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("due")]
+        [Required(AllowEmptyStrings = true)]
         public string Due { get; set; }
 
         /// <summary>
@@ -1961,6 +2100,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("retryDays")]
+        [Range(0, 14)]
         public int RetryDays { get; set; }
 
         /// <summary>
@@ -1972,6 +2112,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("orderId")]
+        [StringLength(50, MinimumLength = 1)]
+        [RegularExpression(@"^[a-zA-Z\d-]+")]
         public string OrderId { get; set; }
 
         /// <summary>
@@ -1982,6 +2124,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("externalId")]
+        [StringLength(64, MinimumLength = 1)]
+        [RegularExpression(@"^.{1,64}$")]
         public string ExternalId { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -2003,6 +2147,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("chargeId")]
+        [StringLength(15)]
         public string ChargeId { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -2044,6 +2189,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("description")]
+        [Required(AllowEmptyStrings = true)]
         public string Description { get; set; }
 
         /// <summary>
@@ -2051,6 +2197,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("due")]
+        [Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset Due { get; set; }
 
         /// <summary>
@@ -2058,9 +2205,12 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("id")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(15)]
         public string Id { get; set; }
 
         [JsonPropertyName("status")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ChargeStatus Status { get; set; }
 
@@ -2069,9 +2219,13 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("transactionId")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(36)]
+        [RegularExpression(@"^\d{10+}$")]
         public string TransactionId { get; set; }
 
         [JsonPropertyName("type")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ChargeType Type { get; set; }
 
@@ -2126,6 +2280,9 @@ namespace Vipps.net.Models.Recurring
         public int Amount { get; set; }
 
         [JsonPropertyName("currency")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(3, MinimumLength = 3)]
+        [RegularExpression(@"^[A-Z]{3}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Currency Currency { get; set; }
 
@@ -2134,6 +2291,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("description")]
+        [Required(AllowEmptyStrings = true)]
         public string Description { get; set; }
 
         /// <summary>
@@ -2141,6 +2299,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("due")]
+        [Required(AllowEmptyStrings = true)]
         public System.DateTimeOffset Due { get; set; }
 
         /// <summary>
@@ -2148,6 +2307,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("id")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(15)]
         public string Id { get; set; }
 
         /// <summary>
@@ -2155,6 +2316,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("agreementId")]
+        [Required(AllowEmptyStrings = true)]
         public string AgreementId { get; set; }
 
         /// <summary>
@@ -2164,6 +2326,9 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("externalId")]
+        [Required]
+        [StringLength(64, MinimumLength = 1)]
+        [RegularExpression(@"^.{1,64}$")]
         public string ExternalId { get; set; }
 
         /// <summary>
@@ -2173,6 +2338,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("externalAgreementId")]
+        [StringLength(64, MinimumLength = 1)]
+        [RegularExpression(@"^.{1,64}$")]
         public string ExternalAgreementId { get; set; }
 
         /// <summary>
@@ -2182,9 +2349,11 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("retryDays")]
+        [Range(0, 14)]
         public int RetryDays { get; set; }
 
         [JsonPropertyName("status")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ChargeStatus Status { get; set; }
 
@@ -2193,13 +2362,18 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("transactionId")]
+        [Required(AllowEmptyStrings = true)]
+        [StringLength(36)]
+        [RegularExpression(@"^\d{10+}$")]
         public string TransactionId { get; set; }
 
         [JsonPropertyName("type")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ChargeType Type { get; set; }
 
         [JsonPropertyName("transactionType")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public TransactionType TransactionType { get; set; }
 
@@ -2230,9 +2404,11 @@ namespace Vipps.net.Models.Recurring
         public string FailureDescription { get; set; }
 
         [JsonPropertyName("summary")]
+        [Required]
         public ChargeSummary Summary { get; set; } = new ChargeSummary();
 
         [JsonPropertyName("history")]
+        [Required]
         public ChargeHistory History { get; set; } = new ChargeHistory();
 
         private IDictionary<string, object> _additionalProperties;
@@ -2257,6 +2433,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("amount")]
+        [Range(100, int.MaxValue)]
         public int Amount { get; set; }
 
         /// <summary>
@@ -2264,6 +2441,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("description")]
+        [Required(AllowEmptyStrings = true)]
         public string Description { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -2288,6 +2466,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("amount")]
+        [Range(100, int.MaxValue)]
         public int Amount { get; set; }
 
         /// <summary>
@@ -2295,6 +2474,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("description")]
+        [Required(AllowEmptyStrings = true)]
         public string Description { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -2319,6 +2499,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("unit")]
+        [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public TimePeriodUnit Unit { get; set; }
 
@@ -2327,6 +2508,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("count")]
+        [Range(1, 31)]
         public int Count { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -2384,6 +2566,7 @@ namespace Vipps.net.Models.Recurring
     {
 
         [JsonPropertyName("customerPhoneNumber")]
+        [Required(AllowEmptyStrings = true)]
         public string CustomerPhoneNumber { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -2402,6 +2585,7 @@ namespace Vipps.net.Models.Recurring
     {
 
         [JsonPropertyName("phoneNumber")]
+        [Required(AllowEmptyStrings = true)]
         public string PhoneNumber { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -2425,9 +2609,11 @@ namespace Vipps.net.Models.Recurring
     {
 
         [JsonPropertyName("responseInfo")]
+        [Required]
         public ResponseInfo ResponseInfo { get; set; } = new ResponseInfo();
 
         [JsonPropertyName("result")]
+        [Required]
         public Result Result { get; set; } = new Result();
 
         private IDictionary<string, object> _additionalProperties;
@@ -2498,7 +2684,7 @@ namespace Vipps.net.Models.Recurring
     /// Error response using the Problem JSON format
     /// </summary>
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ErrorV3
+    public partial record ErrorV3
     {
         /// <summary>
         /// Path to type of error
@@ -2541,9 +2727,9 @@ namespace Vipps.net.Models.Recurring
 
         [JsonPropertyName("contextId")]
         public string ContextId { get; set; }
-
+        
         [JsonPropertyName("extraDetails")]
-        public ExtraDetails ExtraDetails { get; set; }
+        public List<ExtraDetails> ExtraDetails { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
 
@@ -2977,6 +3163,7 @@ namespace Vipps.net.Models.Recurring
         public int ResponseCode { get; set; }
 
         [JsonPropertyName("responseMessage")]
+        [Required(AllowEmptyStrings = true)]
         public string ResponseMessage { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -2998,6 +3185,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("message")]
+        [Required(AllowEmptyStrings = true)]
         public string Message { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -3064,28 +3252,28 @@ namespace Vipps.net.Models.Recurring
 
         public string DiscriminatorName { get { return _discriminatorName; } }
 
-        public override TBase Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options)
+        public override TBase Read(ref Utf8JsonReader reader, System.Type typeToConvert, JsonSerializerOptions options)
         {
-            var document = System.Text.Json.JsonDocument.ParseValue(ref reader);
+            var document = JsonDocument.ParseValue(ref reader);
             var hasDiscriminator = document.RootElement.TryGetProperty(_discriminatorName, out var discriminator);
             var subtype = GetDiscriminatorType(document.RootElement, typeToConvert, hasDiscriminator ? discriminator.GetString() : null);
 
             var bufferWriter = new System.IO.MemoryStream();
-            using (var writer = new System.Text.Json.Utf8JsonWriter(bufferWriter))
+            using (var writer = new Utf8JsonWriter(bufferWriter))
             {
                 document.RootElement.WriteTo(writer);
             }
 
-            return (TBase)System.Text.Json.JsonSerializer.Deserialize(bufferWriter.ToArray(), subtype, options);
+            return (TBase)JsonSerializer.Deserialize(bufferWriter.ToArray(), subtype, options);
         }
 
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, TBase value, System.Text.Json.JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WriteString(_discriminatorName, GetDiscriminatorValue(value.GetType()));
 
-            var bytes = System.Text.Json.JsonSerializer.SerializeToUtf8Bytes((object)value, options);
-            var document = System.Text.Json.JsonDocument.Parse(bytes);
+            var bytes = JsonSerializer.SerializeToUtf8Bytes((object)value, options);
+            var document = JsonDocument.Parse(bytes);
             foreach (var property in document.RootElement.EnumerateObject())
             {
                 property.WriteTo(writer);
@@ -3105,7 +3293,7 @@ namespace Vipps.net.Models.Recurring
             return type.Name;
         }
 
-        protected System.Type GetDiscriminatorType(System.Text.Json.JsonElement jObject, System.Type objectType, string discriminatorValue)
+        protected System.Type GetDiscriminatorType(JsonElement jObject, System.Type objectType, string discriminatorValue)
         {
             var jsonInheritanceAttributeSubtype = GetObjectSubtype(objectType, discriminatorValue);
             if (jsonInheritanceAttributeSubtype != null)
@@ -3151,6 +3339,42 @@ namespace Vipps.net.Models.Recurring
         }
     }
 
+
+
+    [GeneratedCode("NSwag", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApiException : System.Exception
+    {
+        public int StatusCode { get; private set; }
+
+        public string Response { get; private set; }
+
+        public IReadOnlyDictionary<string, IEnumerable<string>> Headers { get; private set; }
+
+        public ApiException(string message, int statusCode, string response, IReadOnlyDictionary<string, IEnumerable<string>> headers, System.Exception innerException)
+            : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 512 ? 512 : response.Length)), innerException)
+        {
+            StatusCode = statusCode;
+            Response = response;
+            Headers = headers;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("HTTP Response: \n\n{0}\n\n{1}", Response, base.ToString());
+        }
+    }
+
+    [GeneratedCode("NSwag", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApiException<TResult> : ApiException
+    {
+        public TResult Result { get; private set; }
+
+        public ApiException(string message, int statusCode, string response, IReadOnlyDictionary<string, IEnumerable<string>> headers, TResult result, System.Exception innerException)
+            : base(message, statusCode, response, headers, innerException)
+        {
+            Result = result;
+        }
+    }
 
 }
 

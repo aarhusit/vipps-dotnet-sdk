@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Vipps.net.Exceptions;
 using Vipps.net.Helpers;
+using Vipps.net.Models.Recurring;
 
 namespace Vipps.net.Infrastructure
 {
@@ -35,37 +36,40 @@ namespace Vipps.net.Infrastructure
                 path,
                 httpMethod,
                 CreateRequestContent(data),
+                null,
                 cancellationToken
             );
         }
 
-        public async Task ExecuteRequest<TRequest>(
-            string path,
-            HttpMethod httpMethod,
-            TRequest data,
-            CancellationToken cancellationToken = default
-        )
-            where TRequest : class
+        public async Task ExecuteRequest<TRequest>            (string path, HttpMethod httpMethod, TRequest data, CancellationToken cancellationToken = default) where TRequest : class
         {
             await ExecuteRequestBase(
                 path,
                 httpMethod,
                 CreateRequestContent(data),
+                null,
                 cancellationToken
             );
         }
 
-        public async Task<TResponse> ExecuteRequest<TResponse>(
-            string path,
-            HttpMethod httpMethod,
-            CancellationToken cancellationToken = default
-        )
-            where TResponse : class
+        public async Task<TResponse> ExecuteRequest<TResponse>(string path, HttpMethod httpMethod, CancellationToken cancellationToken = default) where TResponse : class
         {
             return await ExecuteRequestBaseAndParse<TResponse>(
                 path,
                 httpMethod,
                 null,
+                null,
+                cancellationToken
+            );
+        }
+
+        public async Task<TResponse> ExecuteRequestWithHeader<TResponse>(string path, HttpMethod httpMethod, Dictionary<string, string> headers = null, CancellationToken cancellationToken = default) where TResponse : class
+        {
+            return await ExecuteRequestBaseAndParse<TResponse>(
+                path,
+                httpMethod,
+                null,
+                headers,
                 cancellationToken
             );
         }
@@ -81,6 +85,7 @@ namespace Vipps.net.Infrastructure
             string path,
             HttpMethod httpMethod,
             HttpContent httpContent,
+            Dictionary<string, string> headers,
             CancellationToken cancellationToken
         )
             where TResponse : class
@@ -89,6 +94,7 @@ namespace Vipps.net.Infrastructure
                 path,
                 httpMethod,
                 httpContent,
+                headers,
                 cancellationToken
             );
 #pragma warning disable IDE0079 // Remove unnecessary suppression. This is caused by us building multiple targets. In some (net 6, 7), the overload with the cancellationToken is preferred. In the others, it does not exist.
@@ -118,6 +124,7 @@ namespace Vipps.net.Infrastructure
             string path,
             HttpMethod httpMethod,
             HttpContent httpContent,
+            Dictionary<string, string> extraHeaders,
             CancellationToken cancellationToken
         )
         {
@@ -127,6 +134,11 @@ namespace Vipps.net.Infrastructure
                 $"Request to {httpMethod.Method} {absolutePath} failed even after retries"
             );
             var headers = await GetHeaders(cancellationToken);
+
+            if (extraHeaders != null)
+                foreach (var extraHeader in extraHeaders)
+                    headers.Add(extraHeader.Key, extraHeader.Value);
+
             HttpResponseMessage response = null;
             try
             {
@@ -164,29 +176,40 @@ namespace Vipps.net.Infrastructure
 #pragma warning disable IDE0079 // Remove unnecessary suppression. This is caused by us building multiple targets. In some (net 6, 7), the overload with the cancellationToken is preferred. In the others, it does not exist.
 #pragma warning disable CA2016 // Forward the 'CancellationToken' parameter to methods
                 var responseContent = await response.Content
-                    .ReadAsStringAsync()
+                    .ReadAsStringAsync(cancellationToken)
                     .ConfigureAwait(false);
 #pragma warning restore CA2016 // Forward the 'CancellationToken' parameter to methods
 #pragma warning restore IDE0079 // Remove unnecessary suppression
                 var errorMessage =
                     $"Request to {httpMethod.Method} {absolutePath} failed with status code {response.StatusCode}, content: '{responseContent}'";
-                if (
-                    (int)response.StatusCode >= (int)System.Net.HttpStatusCode.BadRequest
-                    && (int)response.StatusCode < (int)System.Net.HttpStatusCode.InternalServerError
-                )
+                var statusCode = (int)response.StatusCode;
+                const int statusCodeBadRequest = (int)System.Net.HttpStatusCode.BadRequest;
+                const int statusCodeInternalServerError = (int)System.Net.HttpStatusCode.InternalServerError;
+
+                //If StatusCode is 400...499
+                
+                if (statusCode is >= statusCodeBadRequest and < statusCodeInternalServerError)
                 {
+                    //Catch Recurring error
+                    if (statusCode == statusCodeBadRequest)
+                    {
+                        var error = VippsRequestSerializer.DeserializeVippsResponse<ErrorV3>(responseContent);
+                        if (error != null)
+                        {
+                            throw new VippsRecurringException(errorMessage, null, error);
+                        }
+                    }
+                    
                     throw new VippsUserException(errorMessage);
                 }
-                else
-                {
-                    throw new VippsTechnicalException(errorMessage);
-                }
+
+                throw new VippsTechnicalException(errorMessage);
             }
 
             return response;
         }
 
-        private static HttpContent CreateRequestContent<TRequest>(TRequest vippsRequest)
+        private static StringContent CreateRequestContent<TRequest>(TRequest vippsRequest)
             where TRequest : class
         {
             if (vippsRequest is null)
@@ -197,7 +220,7 @@ namespace Vipps.net.Infrastructure
             return new StringContent(serializedRequest, Encoding.UTF8, "application/json");
         }
 
-        private static void AddOrUpdateHeader(HttpRequestHeaders headers, string key, string value)
+        private static void AddOrUpdateHeader(HttpHeaders headers, string key, string value)
         {
             if (headers.Contains(key))
             {
