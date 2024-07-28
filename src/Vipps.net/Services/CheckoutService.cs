@@ -19,6 +19,10 @@ namespace Vipps.net.Services
         );
     }
 
+    public class InitiateSessionRequest
+    {
+    }
+
     internal sealed class VippsCheckoutService : IVippsCheckoutService
     {
         private readonly CheckoutServiceClient _checkoutServiceClient;

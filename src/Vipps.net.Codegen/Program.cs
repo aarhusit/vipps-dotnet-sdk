@@ -10,13 +10,13 @@ internal sealed class Program
     private static async Task Main()
     {
         var httpClient = new HttpClient();
-        const string relativeFilePath = "../Vipps.net/ModelsRecurring/";
+        const string relativeFilePath = "../Vipps.net/Models/";
 
         //Epayment
-        //await GenerateCode(httpClient, new CodegenSettings("Epayment", "epayment", relativeFilePath));
+        await GenerateCode(httpClient, new CodegenSettings("Epayment", "epayment", relativeFilePath));
 
-        ////Checkout
-        //await GenerateCode(httpClient, new CodegenSettings("Checkout", "checkout", relativeFilePath));
+        //Checkout
+        await GenerateCode(httpClient, new CodegenSettings("Checkout", "checkout", relativeFilePath));
 
         //Recurring
         await GenerateCode(httpClient, new CodegenSettings("Recurring", "recurring", relativeFilePath));
@@ -25,14 +25,14 @@ internal sealed class Program
         //var loginOptions = new CodegenSettings("Login", Path.Combine(relativeFilePath, "LoginModels.cs"));
         //await GenerateCode(httpClient, loginOptions);
 
-        ////AccessToken
-        //await GenerateCode(httpClient, new CodegenSettings("AccessToken", "access-token", relativeFilePath));
+        //AccessToken
+        await GenerateCode(httpClient, new CodegenSettings("AccessToken", "access-token", relativeFilePath));
 
-        ////CheckIn
-        //await GenerateCode(httpClient, new CodegenSettings("CheckIn", "check-in", relativeFilePath));
+        //CheckIn
+        await GenerateCode(httpClient, new CodegenSettings("CheckIn", "check-in", relativeFilePath));
 
-        ////Management
-        //await GenerateCode(httpClient, new CodegenSettings("Management", "management", relativeFilePath));
+        //Management
+        await GenerateCode(httpClient, new CodegenSettings("Management", "management", relativeFilePath));
     }
 
     private static async Task GenerateCode(HttpClient httpClient, CodegenSettings options)

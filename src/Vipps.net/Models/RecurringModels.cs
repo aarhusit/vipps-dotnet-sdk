@@ -29,7 +29,4767 @@ namespace Vipps.net.Models.Recurring
 	using System.Threading;
 	using System.ComponentModel.DataAnnotations;
 
-    
+    [GeneratedCode("NSwag", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface IVippsRecurring
+    {
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Agreements
+        /// </summary>
+        /// <remarks>
+        /// The API endpoint allows merchant to fetch all agreements.
+        /// <br/>If no query status is supplied, it will default to only retrieving active agreements.
+        /// <br/>There is no way to list all agreements with all statuses; this is due to performance.
+        /// <br/>**Please note:** Use the query parameters `status` and `createdAfter` specify the
+        /// <br/>agreements you want to retrieve, in order to speed up the query. Try to avoid
+        /// <br/>requests without query parameters. Set `createdAfter` to the most recent value as possible.
+        /// <br/>For instance, if you fetch ACTIVE agreements every 24 hours, use `createdAfter=now-25h` or similar.
+        /// <br/>Not that, in the future, it may be possible to encounter errors when the number of agreements in the response is too high
+        /// <br/>(e.g., `413 Content Too Large` or similar).
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="status">Filter by the `status` of the agreement.</param>
+        /// <param name="createdAfter">Filter by createdAfter timestamp (in milliseconds) for paginating.</param>
+        /// <returns>OK'</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<ICollection<AgreementResponseV2>> ListAgreementsAsync(string authorization, string ocp_Apim_Subscription_Key, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, AgreementStatus? status = null, long? createdAfter = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new Agreement, to be confirmed in the app
+        /// </summary>
+        /// <remarks>
+        /// The API endpoint allows merchants to create agreements for a user to accept. Once the agreement is drafted,you will receive a `vippsConfirmationUrl`.
+        /// <br/>This is used to redirect the user to the landing page, or automatically app-switched to the app if `"isApp":true` is used.
+        /// <br/>
+        /// <br/>If the user accepts or rejects the agreement, the user will be redirected back to the URL specified in `merchantRedirectUrl`.
+        /// <br/>You **have** to implement polling on the agreement to check when the status changes to active instead of relying on the redirect back to the `merchantRedirectUrl`.
+        /// <br/>We have no control over if a user is actually redirected back or not, this depends on what browser the user came from.
+        /// <br/>
+        /// <br/>Please note the different use cases for `initialCharge` and `campaign`. And when to use `RESERVE_CAPTURE` instead of `DIRECT_CAPTURE` as `transactionType`.
+        /// <br/>More information about this can be found in the API documentation.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<DraftAgreementResponseV2> DraftAgreementAsync(string authorization, string ocp_Apim_Subscription_Key, DraftAgreementV2 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Fetch an Agreement
+        /// </summary>
+        /// <remarks>
+        /// Fetch a single agreement for a user.
+        /// <br/>Recommended to use when polling for status changes after sending an agreement to a user.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<AgreementResponseV2> FetchAgreementAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update an Agreement
+        /// </summary>
+        /// <remarks>
+        /// Updates the agreement.
+        /// <br/>Note that when updating the status to `STOPPED`,
+        /// <br/>you can not re-activate it. If you want to pause an agreement,
+        /// <br/>we suggest leaving the agreement active and skipping the creation of charges as long as the agreement is paused in your systems.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="body">agreement</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<AgreementReference> UpdateAgreementPutAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, PatchAgreementV2 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update an Agreement
+        /// </summary>
+        /// <remarks>
+        /// Updates the agreement.
+        /// <br/>Note that when updating the status to `STOPPED`,
+        /// <br/>you can not re-activate it. If you want to pause an agreement,
+        /// <br/>we suggest leaving the agreement active and skipping the creation of charges as long as the agreement is paused in your systems.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="body">agreement</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<AgreementReference> UpdateAgreementPatchAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, PatchAgreementV2 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Force accept an Agreement (Only available in test environment)
+        /// </summary>
+        /// <remarks>
+        /// Forces an agreement to be accepted by the given customer phone number.
+        /// <br/>This endpoint can only be used in the test environment.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<object> AcceptUsingPATCHAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, ForceAcceptAgreement body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Agreements
+        /// </summary>
+        /// <remarks>
+        /// The API endpoint allows merchant to fetch all agreements.
+        /// <br/>If no query status is supplied it will default to only retrieving active agreements.
+        /// <br/>There is no way to list all Agreements with all statuses, this is due to performance.
+        /// <br/>Use the `createdAfter` query to paginate the response.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="continuation_Token">When returned from an endpoint, this indicates that there is more data than can be returned in one response.
+        /// <br/>Repeating the request with the received token in the Continuation-Token header will return the next page of data.
+        /// <br/>When not returned, the end of the data has been reached.
+        /// <br/>
+        /// <br/>Continuation-Tokens are short-lived, so they cannot be used several minutes/hours after received.</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="status">Filter by the `status` of the agreement.</param>
+        /// <param name="createdAfter">Filter by createdAfter timestamp (in milliseconds) for paginating.</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task<ICollection<AgreementResponseV3>> ListAgreementsV3Async(string authorization, string ocp_Apim_Subscription_Key, string content_Type = null, System.Guid? continuation_Token = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, AgreementStatus? status = null, long? createdAfter = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new Agreement, to be confirmed in the Vipps or MobilePay app
+        /// </summary>
+        /// <remarks>
+        /// The API endpoint allows merchants to create agreements for a user to accept. Once the agreement is drafted, you will receive a `vippsConfirmationUrl`.
+        /// <br/>This is used to redirect the user to the Vipps MobilePay landing page, or to the Vipps or MobilePay app when `"isApp":true` is used.
+        /// <br/>
+        /// <br/>If the user accepts or rejects the agreement, the user will be redirected back to whichever URL has been passed in `merchantRedirectUrl`.
+        /// <br/>You **must** implement polling on the agreement to check when the status changes to active, instead of relying on the redirect back to the `merchantRedirectUrl`.
+        /// <br/>We have no control over if a user is actually redirected back or not, this depends on what browser the user came from.
+        /// <br/>
+        /// <br/>Please note the different use cases for `initialCharge` and `campaign`. And when to use `RESERVE_CAPTURE` instead of `DIRECT_CAPTURE` as transactionType.
+        /// <br/>More information about this can be found in the API documentation.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task<DraftAgreementResponseV3> DraftAgreementV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, DraftAgreementV3 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Fetch an Agreement
+        /// </summary>
+        /// <remarks>
+        /// Fetch a single agreement for a user.
+        /// <br/>Recommended to use when polling for status changes after sending an agreement to a user.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task<AgreementResponseV3> FetchAgreementV3Async(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update an Agreement
+        /// </summary>
+        /// <remarks>
+        /// Updates the agreement.
+        /// <br/>Note that when updating the status to `STOPPED`,
+        /// <br/>you can not re-activate it. If you want to pause an agreement,
+        /// <br/>we suggest leaving the agreement active and skipping the creation of charges as long as the agreement is paused in your systems.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="body">agreement</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Accepted. Request accepted, the action will likely succeed but has not yet been enacted.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task UpdateAgreementPatchV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, PatchAgreementV3 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Force accept an Agreement (Only available in test environment)
+        /// </summary>
+        /// <remarks>
+        /// Forces an agreement to be accepted by the given customer phone number.
+        /// <br/>This endpoint can only be used in the test environment.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task<object> AcceptUsingPATCHV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, ForceAcceptAgreementV3 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Charges
+        /// </summary>
+        /// <remarks>
+        /// Fetches all charges for a single agreement, including the optional initial charge.
+        /// <br/>Supports filtering on `status` using it as a query parameter.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="chargeStatus">Filter by status of the charge.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<ICollection<ChargeResponseV2>> ListChargesAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, ChargeStatus? chargeStatus = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new charge
+        /// </summary>
+        /// <remarks>
+        /// Creates a new recurring charge *(payment)* that will charge the user on the date specified.
+        /// <br/>If the payment fails, the charge will be retried based on `retryDays`.
+        /// <br/>We recommend at least two days retry.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<ChargeReference> CreateChargeAsync(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, CreateChargeV2 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Fetch a Charge
+        /// </summary>
+        /// <remarks>
+        /// Fetch a single charge for a user.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<ChargeResponseV2> FetchChargeAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Cancel a Charge
+        /// </summary>
+        /// <remarks>
+        /// Cancels a pending, due, or reserved charge.
+        /// <br/>When cancelling a charge that is `PARTIALLY_CAPTURED`, the remaining funds on the charge
+        /// <br/>will be released back to the customer.
+        /// <br/>
+        /// <br/>Please note: If you cancel an agreement, all the charges for that agreement are automatically cancelled.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<ChargeResponseV2> CancelChargeAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Capture a reserved charge
+        /// </summary>
+        /// <remarks>
+        /// Captures a reserved charge.
+        /// <br/>Only charges with transactionType `RESERVE_CAPTURE` can be captured.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<object> CaptureChargeAsync(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Refund a charge
+        /// </summary>
+        /// <remarks>
+        /// Refunds a charge, and can also do a partial refund (refunding a smaller part of the payment).
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        Task<object> RefundChargeAsync(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, string chargeId, RefundRequest body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Charges
+        /// </summary>
+        /// <remarks>
+        /// Fetches all charges for a single agreement, including the optional initial charge.
+        /// <br/>Supports filtering on status using query parameter.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="continuation_Token">When returned from an endpoint, this indicates that there is more data than can be returned in one response.
+        /// <br/>Repeating the request with the received token in the Continuation-Token header will return the next page of data.
+        /// <br/>When not returned, the end of the data has been reached.
+        /// <br/>
+        /// <br/>Continuation-Tokens are short-lived, so they cannot be used several minutes/hours after received.</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="status">Filter by status of the charge.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task<ICollection<ChargeResponseV3>> ListChargesV3Async(string authorization, string ocp_Apim_Subscription_Key, string agreementId, System.Guid? continuation_Token = null, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, ChargeStatus? status = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new charge
+        /// </summary>
+        /// <remarks>
+        /// Creates a new recurring charge *(payment)* that will charge the user on the date specified.
+        /// <br/>If the payment fails, the charge will be retried based on `retryDays`.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task<ChargeReference> CreateChargeV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, CreateChargeV3 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create multiple charges
+        /// </summary>
+        /// <remarks>
+        /// Asynchronously creates multiple new recurring charges *(payments)* that will be automatically processed on the due date.
+        /// <br/>If the payment fails, the charge will be retried based on `retryDays`. Maximum 2000 charges per request.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>None, some or all charges passed API level validation.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task<AsyncChargeResponse> CreateChargeAsyncV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, IEnumerable<CreateChargeAsyncV3> body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Fetch a charge
+        /// </summary>
+        /// <remarks>
+        /// Fetch a single charge for a user.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task<ChargeResponseV3> FetchChargeV3Async(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Cancel a charge
+        /// </summary>
+        /// <remarks>
+        /// Cancels a pending, due or reserved charge.
+        /// <br/>When cancelling a charge that is `PARTIALLY_CAPTURED`, the remaining funds on the charge
+        /// <br/>will be released back to the customer.
+        /// <br/>
+        /// <br/>Note if you cancel an agreement,
+        /// <br/>there is no need to cancel the charges that belongs to the agreement.
+        /// <br/>This will be done automatically.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Accepted. Request accepted, the action will likely succeed but has not yet been enacted.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task CancelChargeV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Fetch a charge by ID
+        /// </summary>
+        /// <remarks>
+        /// A "special case" endpoint to fetch a single charge just by `chargeId`, when the `agreementId` is unknown.
+        /// <br/>This is useful for investigating claims from customers, but not intended for automation.
+        /// <br/>
+        /// <br/>Please note: This is *not* a replacement for the normal endpoint for fetching charges:
+        /// <br/>`GET:/recurring/v3/agreements/{agreementId}/charges/{chargeId}`.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task<ChargeResponseV3> FetchChargeByIdV3Async(string authorization, string ocp_Apim_Subscription_Key, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Capture a reserved charge
+        /// </summary>
+        /// <remarks>
+        /// Captures a reserved charge.
+        /// <br/>Only charges with transactionType `RESERVE_CAPTURE` can be captured.
+        /// <br/>Can also do partial captures (captures a smaller part of the payment).
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Accepted. Request accepted, the action will likely succeed but has not yet been enacted.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task CaptureChargeV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, string chargeId, CaptureRequestV3 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Refund a charge
+        /// </summary>
+        /// <remarks>
+        /// Refunds a charge, can also do a partial refund (refunding a smaller part of the payment).
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Accepted. Request accepted, the action will likely succeed but has not yet been enacted.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        Task RefundChargeV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, string chargeId, RefundRequest body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken));
+
+    }
+
+    [GeneratedCode("NSwag", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class VippsRecurring : IVippsRecurring
+    {
+    #pragma warning disable 8618 // Set by constructor via BaseUrl property
+        private string _baseUrl;
+    #pragma warning restore 8618 // Set by constructor via BaseUrl property
+        private System.Net.Http.HttpClient _httpClient;
+        private static System.Lazy<JsonSerializerOptions> _settings = new System.Lazy<JsonSerializerOptions>(CreateSerializerSettings, true);
+
+        public VippsRecurring(System.Net.Http.HttpClient httpClient)
+        {
+            BaseUrl = "https://api.vipps.no";
+            _httpClient = httpClient;
+        }
+
+        private static JsonSerializerOptions CreateSerializerSettings()
+        {
+            var settings = new JsonSerializerOptions();
+            UpdateJsonSerializerSettings(settings);
+            return settings;
+        }
+
+        private static void UpdateJsonSerializerSettings(JsonSerializerOptions settings) => throw new NotImplementedException();
+
+        public string BaseUrl
+        {
+            get { return _baseUrl; }
+            set
+            {
+                _baseUrl = value;
+                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
+                    _baseUrl += '/';
+            }
+        }
+
+        protected JsonSerializerOptions JsonSerializerSettings { get { return _settings.Value; } }
+
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Agreements
+        /// </summary>
+        /// <remarks>
+        /// The API endpoint allows merchant to fetch all agreements.
+        /// <br/>If no query status is supplied, it will default to only retrieving active agreements.
+        /// <br/>There is no way to list all agreements with all statuses; this is due to performance.
+        /// <br/>**Please note:** Use the query parameters `status` and `createdAfter` specify the
+        /// <br/>agreements you want to retrieve, in order to speed up the query. Try to avoid
+        /// <br/>requests without query parameters. Set `createdAfter` to the most recent value as possible.
+        /// <br/>For instance, if you fetch ACTIVE agreements every 24 hours, use `createdAfter=now-25h` or similar.
+        /// <br/>Not that, in the future, it may be possible to encounter errors when the number of agreements in the response is too high
+        /// <br/>(e.g., `413 Content Too Large` or similar).
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="status">Filter by the `status` of the agreement.</param>
+        /// <param name="createdAfter">Filter by createdAfter timestamp (in milliseconds) for paginating.</param>
+        /// <returns>OK'</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<ICollection<AgreementResponseV2>> ListAgreementsAsync(string authorization, string ocp_Apim_Subscription_Key, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, AgreementStatus? status = null, long? createdAfter = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements"
+                    urlBuilder_.Append("recurring/v2/agreements");
+            urlBuilder_.Append('?');
+            if (status != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("status")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(status, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+            }
+            if (createdAfter != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("createdAfter")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(createdAfter, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+            }
+            urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ICollection<AgreementResponseV2>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new Agreement, to be confirmed in the app
+        /// </summary>
+        /// <remarks>
+        /// The API endpoint allows merchants to create agreements for a user to accept. Once the agreement is drafted,you will receive a `vippsConfirmationUrl`.
+        /// <br/>This is used to redirect the user to the landing page, or automatically app-switched to the app if `"isApp":true` is used.
+        /// <br/>
+        /// <br/>If the user accepts or rejects the agreement, the user will be redirected back to the URL specified in `merchantRedirectUrl`.
+        /// <br/>You **have** to implement polling on the agreement to check when the status changes to active instead of relying on the redirect back to the `merchantRedirectUrl`.
+        /// <br/>We have no control over if a user is actually redirected back or not, this depends on what browser the user came from.
+        /// <br/>
+        /// <br/>Please note the different use cases for `initialCharge` and `campaign`. And when to use `RESERVE_CAPTURE` instead of `DIRECT_CAPTURE` as `transactionType`.
+        /// <br/>More information about this can be found in the API documentation.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<DraftAgreementResponseV2> DraftAgreementAsync(string authorization, string ocp_Apim_Subscription_Key, DraftAgreementV2 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements"
+                    urlBuilder_.Append("recurring/v2/agreements");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 201)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<DraftAgreementResponseV2>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Fetch an Agreement
+        /// </summary>
+        /// <remarks>
+        /// Fetch a single agreement for a user.
+        /// <br/>Recommended to use when polling for status changes after sending an agreement to a user.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<AgreementResponseV2> FetchAgreementAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements/{agreementId}"
+                    urlBuilder_.Append("recurring/v2/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AgreementResponseV2>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update an Agreement
+        /// </summary>
+        /// <remarks>
+        /// Updates the agreement.
+        /// <br/>Note that when updating the status to `STOPPED`,
+        /// <br/>you can not re-activate it. If you want to pause an agreement,
+        /// <br/>we suggest leaving the agreement active and skipping the creation of charges as long as the agreement is paused in your systems.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="body">agreement</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<AgreementReference> UpdateAgreementPutAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, PatchAgreementV2 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements/{agreementId}"
+                    urlBuilder_.Append("recurring/v2/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AgreementReference>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update an Agreement
+        /// </summary>
+        /// <remarks>
+        /// Updates the agreement.
+        /// <br/>Note that when updating the status to `STOPPED`,
+        /// <br/>you can not re-activate it. If you want to pause an agreement,
+        /// <br/>we suggest leaving the agreement active and skipping the creation of charges as long as the agreement is paused in your systems.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="body">agreement</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<AgreementReference> UpdateAgreementPatchAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, PatchAgreementV2 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements/{agreementId}"
+                    urlBuilder_.Append("recurring/v2/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AgreementReference>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Force accept an Agreement (Only available in test environment)
+        /// </summary>
+        /// <remarks>
+        /// Forces an agreement to be accepted by the given customer phone number.
+        /// <br/>This endpoint can only be used in the test environment.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<object> AcceptUsingPATCHAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, ForceAcceptAgreement body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements/{agreementId}/accept"
+                    urlBuilder_.Append("recurring/v2/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accept");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Agreements
+        /// </summary>
+        /// <remarks>
+        /// The API endpoint allows merchant to fetch all agreements.
+        /// <br/>If no query status is supplied it will default to only retrieving active agreements.
+        /// <br/>There is no way to list all Agreements with all statuses, this is due to performance.
+        /// <br/>Use the `createdAfter` query to paginate the response.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="continuation_Token">When returned from an endpoint, this indicates that there is more data than can be returned in one response.
+        /// <br/>Repeating the request with the received token in the Continuation-Token header will return the next page of data.
+        /// <br/>When not returned, the end of the data has been reached.
+        /// <br/>
+        /// <br/>Continuation-Tokens are short-lived, so they cannot be used several minutes/hours after received.</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="status">Filter by the `status` of the agreement.</param>
+        /// <param name="createdAfter">Filter by createdAfter timestamp (in milliseconds) for paginating.</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task<ICollection<AgreementResponseV3>> ListAgreementsV3Async(string authorization, string ocp_Apim_Subscription_Key, string content_Type = null, System.Guid? continuation_Token = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, AgreementStatus? status = null, long? createdAfter = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (continuation_Token != null)
+                        request_.Headers.TryAddWithoutValidation("Continuation-Token", ConvertToString(continuation_Token, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements"
+                    urlBuilder_.Append("recurring/v3/agreements");
+            urlBuilder_.Append('?');
+            if (status != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("status")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(status, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+            }
+            if (createdAfter != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("createdAfter")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(createdAfter, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+            }
+            urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ICollection<AgreementResponseV3>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new Agreement, to be confirmed in the Vipps or MobilePay app
+        /// </summary>
+        /// <remarks>
+        /// The API endpoint allows merchants to create agreements for a user to accept. Once the agreement is drafted, you will receive a `vippsConfirmationUrl`.
+        /// <br/>This is used to redirect the user to the Vipps MobilePay landing page, or to the Vipps or MobilePay app when `"isApp":true` is used.
+        /// <br/>
+        /// <br/>If the user accepts or rejects the agreement, the user will be redirected back to whichever URL has been passed in `merchantRedirectUrl`.
+        /// <br/>You **must** implement polling on the agreement to check when the status changes to active, instead of relying on the redirect back to the `merchantRedirectUrl`.
+        /// <br/>We have no control over if a user is actually redirected back or not, this depends on what browser the user came from.
+        /// <br/>
+        /// <br/>Please note the different use cases for `initialCharge` and `campaign`. And when to use `RESERVE_CAPTURE` instead of `DIRECT_CAPTURE` as transactionType.
+        /// <br/>More information about this can be found in the API documentation.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task<DraftAgreementResponseV3> DraftAgreementV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, DraftAgreementV3 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (idempotency_Key == null)
+                        throw new System.ArgumentNullException("idempotency_Key");
+                    request_.Headers.TryAddWithoutValidation("Idempotency-Key", ConvertToString(idempotency_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements"
+                    urlBuilder_.Append("recurring/v3/agreements");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 201)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<DraftAgreementResponseV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Fetch an Agreement
+        /// </summary>
+        /// <remarks>
+        /// Fetch a single agreement for a user.
+        /// <br/>Recommended to use when polling for status changes after sending an agreement to a user.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task<AgreementResponseV3> FetchAgreementV3Async(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements/{agreementId}"
+                    urlBuilder_.Append("recurring/v3/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AgreementResponseV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Update an Agreement
+        /// </summary>
+        /// <remarks>
+        /// Updates the agreement.
+        /// <br/>Note that when updating the status to `STOPPED`,
+        /// <br/>you can not re-activate it. If you want to pause an agreement,
+        /// <br/>we suggest leaving the agreement active and skipping the creation of charges as long as the agreement is paused in your systems.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="body">agreement</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Accepted. Request accepted, the action will likely succeed but has not yet been enacted.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task UpdateAgreementPatchV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, PatchAgreementV3 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (idempotency_Key == null)
+                        throw new System.ArgumentNullException("idempotency_Key");
+                    request_.Headers.TryAddWithoutValidation("Idempotency-Key", ConvertToString(idempotency_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements/{agreementId}"
+                    urlBuilder_.Append("recurring/v3/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 202)
+                        {
+                            return;
+                        }
+                        else
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Force accept an Agreement (Only available in test environment)
+        /// </summary>
+        /// <remarks>
+        /// Forces an agreement to be accepted by the given customer phone number.
+        /// <br/>This endpoint can only be used in the test environment.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task<object> AcceptUsingPATCHV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, ForceAcceptAgreementV3 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (idempotency_Key == null)
+                        throw new System.ArgumentNullException("idempotency_Key");
+                    request_.Headers.TryAddWithoutValidation("Idempotency-Key", ConvertToString(idempotency_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements/{agreementId}/accept"
+                    urlBuilder_.Append("recurring/v3/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/accept");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 204)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Charges
+        /// </summary>
+        /// <remarks>
+        /// Fetches all charges for a single agreement, including the optional initial charge.
+        /// <br/>Supports filtering on `status` using it as a query parameter.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="chargeStatus">Filter by status of the charge.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<ICollection<ChargeResponseV2>> ListChargesAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, ChargeStatus? chargeStatus = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements/{agreementId}/charges"
+                    urlBuilder_.Append("recurring/v2/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges");
+            urlBuilder_.Append('?');
+            if (chargeStatus != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("chargeStatus")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(chargeStatus, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+            }
+            urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ICollection<ChargeResponseV2>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new charge
+        /// </summary>
+        /// <remarks>
+        /// Creates a new recurring charge *(payment)* that will charge the user on the date specified.
+        /// <br/>If the payment fails, the charge will be retried based on `retryDays`.
+        /// <br/>We recommend at least two days retry.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<ChargeReference> CreateChargeAsync(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, CreateChargeV2 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (idempotency_Key == null)
+                        throw new System.ArgumentNullException("idempotency_Key");
+                    request_.Headers.TryAddWithoutValidation("Idempotency-Key", ConvertToString(idempotency_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements/{agreementId}/charges"
+                    urlBuilder_.Append("recurring/v2/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 201)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ChargeReference>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Fetch a Charge
+        /// </summary>
+        /// <remarks>
+        /// Fetch a single charge for a user.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<ChargeResponseV2> FetchChargeAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (chargeId == null)
+                throw new System.ArgumentNullException("chargeId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements/{agreementId}/charges/{chargeId}"
+                    urlBuilder_.Append("recurring/v2/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(chargeId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ChargeResponseV2>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Cancel a Charge
+        /// </summary>
+        /// <remarks>
+        /// Cancels a pending, due, or reserved charge.
+        /// <br/>When cancelling a charge that is `PARTIALLY_CAPTURED`, the remaining funds on the charge
+        /// <br/>will be released back to the customer.
+        /// <br/>
+        /// <br/>Please note: If you cancel an agreement, all the charges for that agreement are automatically cancelled.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<ChargeResponseV2> CancelChargeAsync(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (chargeId == null)
+                throw new System.ArgumentNullException("chargeId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements/{agreementId}/charges/{chargeId}"
+                    urlBuilder_.Append("recurring/v2/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(chargeId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ChargeResponseV2>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Capture a reserved charge
+        /// </summary>
+        /// <remarks>
+        /// Captures a reserved charge.
+        /// <br/>Only charges with transactionType `RESERVE_CAPTURE` can be captured.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<object> CaptureChargeAsync(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (chargeId == null)
+                throw new System.ArgumentNullException("chargeId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (idempotency_Key == null)
+                        throw new System.ArgumentNullException("idempotency_Key");
+                    request_.Headers.TryAddWithoutValidation("Idempotency-Key", ConvertToString(idempotency_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements/{agreementId}/charges/{chargeId}/capture"
+                    urlBuilder_.Append("recurring/v2/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(chargeId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/capture");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Refund a charge
+        /// </summary>
+        /// <remarks>
+        /// Refunds a charge, and can also do a partial refund (refunding a smaller part of the payment).
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        [System.Obsolete]
+        public virtual async Task<object> RefundChargeAsync(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, string chargeId, RefundRequest body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (chargeId == null)
+                throw new System.ArgumentNullException("chargeId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (idempotency_Key == null)
+                        throw new System.ArgumentNullException("idempotency_Key");
+                    request_.Headers.TryAddWithoutValidation("Idempotency-Key", ConvertToString(idempotency_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v2/agreements/{agreementId}/charges/{chargeId}/refund"
+                    urlBuilder_.Append("recurring/v2/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(chargeId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/refund");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorArray>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorArray>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// List Charges
+        /// </summary>
+        /// <remarks>
+        /// Fetches all charges for a single agreement, including the optional initial charge.
+        /// <br/>Supports filtering on status using query parameter.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="continuation_Token">When returned from an endpoint, this indicates that there is more data than can be returned in one response.
+        /// <br/>Repeating the request with the received token in the Continuation-Token header will return the next page of data.
+        /// <br/>When not returned, the end of the data has been reached.
+        /// <br/>
+        /// <br/>Continuation-Tokens are short-lived, so they cannot be used several minutes/hours after received.</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="status">Filter by status of the charge.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task<ICollection<ChargeResponseV3>> ListChargesV3Async(string authorization, string ocp_Apim_Subscription_Key, string agreementId, System.Guid? continuation_Token = null, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, ChargeStatus? status = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (continuation_Token != null)
+                        request_.Headers.TryAddWithoutValidation("Continuation-Token", ConvertToString(continuation_Token, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements/{agreementId}/charges"
+                    urlBuilder_.Append("recurring/v3/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges");
+            urlBuilder_.Append('?');
+            if (status != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("status")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(status, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+            }
+            urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ICollection<ChargeResponseV3>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new charge
+        /// </summary>
+        /// <remarks>
+        /// Creates a new recurring charge *(payment)* that will charge the user on the date specified.
+        /// <br/>If the payment fails, the charge will be retried based on `retryDays`.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Created</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task<ChargeReference> CreateChargeV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, CreateChargeV3 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (idempotency_Key == null)
+                        throw new System.ArgumentNullException("idempotency_Key");
+                    request_.Headers.TryAddWithoutValidation("Idempotency-Key", ConvertToString(idempotency_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements/{agreementId}/charges"
+                    urlBuilder_.Append("recurring/v3/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 201)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ChargeReference>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create multiple charges
+        /// </summary>
+        /// <remarks>
+        /// Asynchronously creates multiple new recurring charges *(payments)* that will be automatically processed on the due date.
+        /// <br/>If the payment fails, the charge will be retried based on `retryDays`. Maximum 2000 charges per request.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>None, some or all charges passed API level validation.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task<AsyncChargeResponse> CreateChargeAsyncV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, IEnumerable<CreateChargeAsyncV3> body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (idempotency_Key == null)
+                        throw new System.ArgumentNullException("idempotency_Key");
+                    request_.Headers.TryAddWithoutValidation("Idempotency-Key", ConvertToString(idempotency_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements/charges"
+                    urlBuilder_.Append("recurring/v3/agreements/charges");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 202)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<AsyncChargeResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Fetch a charge
+        /// </summary>
+        /// <remarks>
+        /// Fetch a single charge for a user.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task<ChargeResponseV3> FetchChargeV3Async(string authorization, string ocp_Apim_Subscription_Key, string agreementId, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (chargeId == null)
+                throw new System.ArgumentNullException("chargeId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements/{agreementId}/charges/{chargeId}"
+                    urlBuilder_.Append("recurring/v3/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(chargeId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ChargeResponseV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Cancel a charge
+        /// </summary>
+        /// <remarks>
+        /// Cancels a pending, due or reserved charge.
+        /// <br/>When cancelling a charge that is `PARTIALLY_CAPTURED`, the remaining funds on the charge
+        /// <br/>will be released back to the customer.
+        /// <br/>
+        /// <br/>Note if you cancel an agreement,
+        /// <br/>there is no need to cancel the charges that belongs to the agreement.
+        /// <br/>This will be done automatically.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Accepted. Request accepted, the action will likely succeed but has not yet been enacted.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task CancelChargeV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (chargeId == null)
+                throw new System.ArgumentNullException("chargeId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (idempotency_Key == null)
+                        throw new System.ArgumentNullException("idempotency_Key");
+                    request_.Headers.TryAddWithoutValidation("Idempotency-Key", ConvertToString(idempotency_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements/{agreementId}/charges/{chargeId}"
+                    urlBuilder_.Append("recurring/v3/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(chargeId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 202)
+                        {
+                            return;
+                        }
+                        else
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Fetch a charge by ID
+        /// </summary>
+        /// <remarks>
+        /// A "special case" endpoint to fetch a single charge just by `chargeId`, when the `agreementId` is unknown.
+        /// <br/>This is useful for investigating claims from customers, but not intended for automation.
+        /// <br/>
+        /// <br/>Please note: This is *not* a replacement for the normal endpoint for fetching charges:
+        /// <br/>`GET:/recurring/v3/agreements/{agreementId}/charges/{chargeId}`.
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task<ChargeResponseV3> FetchChargeByIdV3Async(string authorization, string ocp_Apim_Subscription_Key, string chargeId, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (chargeId == null)
+                throw new System.ArgumentNullException("chargeId");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/charges/{chargeId}"
+                    urlBuilder_.Append("recurring/v3/charges/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(chargeId, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ChargeResponseV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Capture a reserved charge
+        /// </summary>
+        /// <remarks>
+        /// Captures a reserved charge.
+        /// <br/>Only charges with transactionType `RESERVE_CAPTURE` can be captured.
+        /// <br/>Can also do partial captures (captures a smaller part of the payment).
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Accepted. Request accepted, the action will likely succeed but has not yet been enacted.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task CaptureChargeV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, string chargeId, CaptureRequestV3 body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (chargeId == null)
+                throw new System.ArgumentNullException("chargeId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (idempotency_Key == null)
+                        throw new System.ArgumentNullException("idempotency_Key");
+                    request_.Headers.TryAddWithoutValidation("Idempotency-Key", ConvertToString(idempotency_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements/{agreementId}/charges/{chargeId}/capture"
+                    urlBuilder_.Append("recurring/v3/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(chargeId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/capture");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 202)
+                        {
+                            return;
+                        }
+                        else
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Refund a charge
+        /// </summary>
+        /// <remarks>
+        /// Refunds a charge, can also do a partial refund (refunding a smaller part of the payment).
+        /// </remarks>
+        /// <param name="authorization">The access token is a base64-encoded string that is required for all API requests. It is a JWT (JSON Web Token). The access token is fetched from the
+        /// <br/>    [`POST:/accesstoken/get`](/api/access-token#tag/Authorization-Service/operation/fetchAuthorizationTokenUsingPost)
+        /// <br/>    endpoint.
+        /// <br/>It is valid for 1 hour in the test environment and 24 hours in the production environment.</param>
+        /// <param name="ocp_Apim_Subscription_Key">The subscription key for your sales unit. See [API keys](/docs/knowledge-base/api-keys/). Keep it secret.</param>
+        /// <param name="idempotency_Key">An Idempotency key must be provided to ensure idempotent requests.
+        /// <br/>Key size can be between 1 to 40 characters.
+        /// <br/>Key must not contain '#', '?', '/' or '\\'</param>
+        /// <param name="agreementId">The agreement identifier (ID)</param>
+        /// <param name="chargeId">The charge identifier (ID)</param>
+        /// <param name="content_Type">The content type must be `application/json`</param>
+        /// <param name="merchant_Serial_Number">The Merchant Serial Number (MSN) is a unique ID for the sales unit
+        /// <br/>for which this payment is made.
+        /// <br/>This is a required parameter if you are a Recurring partner
+        /// <br/>making payments on behalf of a merchant.
+        /// <br/>The partner must use the merchant's MSN (not the partner's MSN).
+        /// <br/>This parameter is optional, and recommended, for regular Vipps MobilePay
+        /// <br/>merchants making payments for themselves.</param>
+        /// <param name="vipps_System_Name">The name of the ecommerce solution. One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Version">The version number of the ecommerce solution.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Name">The name of the ecommerce plugin (if applicable). One word in lowercase letters is good.
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <param name="vipps_System_Plugin_Version">The version number of the ecommerce plugin (if applicable).
+        /// <br/>See [HTTP headers](/docs/knowledge-base/http-headers).</param>
+        /// <returns>Accepted. Request accepted, the action will likely succeed but has not yet been enacted.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public virtual async Task RefundChargeV3Async(string authorization, string ocp_Apim_Subscription_Key, string idempotency_Key, string agreementId, string chargeId, RefundRequest body, string content_Type = null, string merchant_Serial_Number = null, string vipps_System_Name = null, string vipps_System_Version = null, string vipps_System_Plugin_Name = null, string vipps_System_Plugin_Version = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (agreementId == null)
+                throw new System.ArgumentNullException("agreementId");
+
+            if (chargeId == null)
+                throw new System.ArgumentNullException("chargeId");
+
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+
+                    if (authorization == null)
+                        throw new System.ArgumentNullException("authorization");
+                    request_.Headers.TryAddWithoutValidation("Authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (ocp_Apim_Subscription_Key == null)
+                        throw new System.ArgumentNullException("ocp_Apim_Subscription_Key");
+                    request_.Headers.TryAddWithoutValidation("Ocp-Apim-Subscription-Key", ConvertToString(ocp_Apim_Subscription_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (idempotency_Key == null)
+                        throw new System.ArgumentNullException("idempotency_Key");
+                    request_.Headers.TryAddWithoutValidation("Idempotency-Key", ConvertToString(idempotency_Key, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (content_Type != null)
+                        request_.Headers.TryAddWithoutValidation("Content-Type", ConvertToString(content_Type, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (merchant_Serial_Number != null)
+                        request_.Headers.TryAddWithoutValidation("Merchant-Serial-Number", ConvertToString(merchant_Serial_Number, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Name", ConvertToString(vipps_System_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Version", ConvertToString(vipps_System_Version, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Name != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Name", ConvertToString(vipps_System_Plugin_Name, System.Globalization.CultureInfo.InvariantCulture));
+
+                    if (vipps_System_Plugin_Version != null)
+                        request_.Headers.TryAddWithoutValidation("Vipps-System-Plugin-Version", ConvertToString(vipps_System_Plugin_Version, System.Globalization.CultureInfo.InvariantCulture));
+                    var json_ = JsonSerializer.SerializeToUtf8Bytes(body, _settings.Value);
+                    var content_ = new System.Net.Http.ByteArrayContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(BaseUrl)) urlBuilder_.Append(BaseUrl);
+                    // Operation Path: "recurring/v3/agreements/{agreementId}/charges/{chargeId}/refund"
+                    urlBuilder_.Append("recurring/v3/agreements/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(agreementId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/charges/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(chargeId, System.Globalization.CultureInfo.InvariantCulture)));
+                    urlBuilder_.Append("/refund");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new Dictionary<string, IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 202)
+                        {
+                            return;
+                        }
+                        else
+                        if (status_ == 204)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorV3>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorV3>("Possible error responses.\nErrors can be from both our own code (where we have full control) and\nfrom Microsoft Azure (where we rely on standard functionality).", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+
+            public T Object { get; }
+
+            public string Text { get; }
+        }
+
+        public bool ReadResponseAsString { get; set; }
+
+        protected virtual async Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, IReadOnlyDictionary<string, IEnumerable<string>> headers, CancellationToken cancellationToken)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = JsonSerializer.Deserialize<T>(responseText, JsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new ApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    {
+                        var typedBody = await JsonSerializer.DeserializeAsync<T>(responseStream, JsonSerializerSettings, cancellationToken).ConfigureAwait(false);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+
+            if (value is System.Enum)
+            {
+                var name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(EnumMemberAttribute)) 
+                            as EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+
+                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    return converted == null ? string.Empty : converted;
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value is string[])
+            {
+                return string.Join(",", (string[])value);
+            }
+            else if (value.GetType().IsArray)
+            {
+                var valueArray = (System.Array)value;
+                var valueTextArray = new string[valueArray.Length];
+                for (var i = 0; i < valueArray.Length; i++)
+                {
+                    valueTextArray[i] = ConvertToString(valueArray.GetValue(i), cultureInfo);
+                }
+                return string.Join(",", valueTextArray);
+            }
+
+            var result = System.Convert.ToString(value, cultureInfo);
+            return result == null ? "" : result;
+        }
+    }
 
     /// <summary>
     /// Status of the agreement.
@@ -97,7 +4857,7 @@ namespace Vipps.net.Models.Recurring
         /// <summary>
         /// The total amount which has been captured/charged, in case of status charged/partial capture.
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("captured")]
@@ -106,7 +4866,7 @@ namespace Vipps.net.Models.Recurring
         /// <summary>
         /// The total amount which has been refunded, in case of status refund/partial refund.
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("refunded")]
@@ -116,7 +4876,7 @@ namespace Vipps.net.Models.Recurring
         /// The total amount which has been cancelled.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("cancelled")]
@@ -165,7 +4925,7 @@ namespace Vipps.net.Models.Recurring
         /// <summary>
         /// The amount related to the operation.
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("amount")]
@@ -210,7 +4970,7 @@ namespace Vipps.net.Models.Recurring
     }
 
     /// <summary>
-    /// Only NOK is supported at the moment. Support for EUR and DKK will be provided in early 2024.
+    /// Available types of currency are NOK, EUR and DKK
     /// </summary>
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum CurrencyV3
@@ -218,6 +4978,32 @@ namespace Vipps.net.Models.Recurring
 
         [EnumMember(Value = @"NOK")]
         NOK = 0,
+
+        [EnumMember(Value = @"EUR")]
+        EUR = 1,
+
+        [EnumMember(Value = @"DKK")]
+        DKK = 2,
+
+    }
+
+    /// <summary>
+    /// Country code for the agreement according to ISO 3166-2 (two capital letters).
+    /// <br/>Needs to be set based on the merchant's market/country. Cross border agreements are not supported, 
+    /// <br/>e.g., Norwegian merchants can only create agreements for Norwegian customers and countryCode should be NO.
+    /// </summary>
+    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum CountryCode
+    {
+
+        [EnumMember(Value = @"NO")]
+        NO = 0,
+
+        [EnumMember(Value = @"DK")]
+        DK = 1,
+
+        [EnumMember(Value = @"FI")]
+        FI = 2,
 
     }
 
@@ -237,7 +5023,7 @@ namespace Vipps.net.Models.Recurring
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum ChargeType
+    public enum ChargeTypeV2
     {
 
         [EnumMember(Value = @"INITIAL")]
@@ -245,6 +5031,33 @@ namespace Vipps.net.Models.Recurring
 
         [EnumMember(Value = @"RECURRING")]
         RECURRING = 1,
+
+    }
+
+    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum ChargeTypeV3
+    {
+
+        [EnumMember(Value = @"INITIAL")]
+        INITIAL = 0,
+
+        [EnumMember(Value = @"RECURRING")]
+        RECURRING = 1,
+
+        [EnumMember(Value = @"UNSCHEDULED")]
+        UNSCHEDULED = 2,
+
+    }
+
+    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum ChargeCreationTypeV3
+    {
+
+        [EnumMember(Value = @"RECURRING")]
+        RECURRING = 0,
+
+        [EnumMember(Value = @"UNSCHEDULED")]
+        UNSCHEDULED = 1,
 
     }
 
@@ -274,7 +5087,7 @@ namespace Vipps.net.Models.Recurring
     {
 
         [JsonPropertyName("variableAmount")]
-        public VariableAmount VariableAmount { get; set; }
+        public VariableAmountV2 VariableAmount { get; set; }
 
         [JsonPropertyName("campaign")]
         public CampaignV2 Campaign { get; set; }
@@ -291,7 +5104,7 @@ namespace Vipps.net.Models.Recurring
         /// <br/>following Vipps MobilePay interaction.
         /// <br/>The format is MSISDN: Digits only: Country code and subscriber
         /// <br/>number, but no prefix.
-        /// <br/>If the phone number is a Norwegian phone number `(+47) 91 23 45 67`, the MSISDN representation is `4791234567`.
+        /// <br/>If the phone number is a Norwegian phone number `(+47) 91 23 45 67`, the MSISDN representation is `4712345678`.
         /// <br/>See: https://en.wikipedia.org/wiki/MSISDN
         /// </summary>
 
@@ -325,7 +5138,7 @@ namespace Vipps.net.Models.Recurring
         /// <br/>redirect URL for Vipps MobilePay landing page or deeplink URL to connect vipps
         /// <br/>App. When isApp is set to true, URLs passed to us will not be
         /// <br/>validated as regular URLs.
-        /// <br/>See: https://developer.vippsmobilepay.com/docs/knowledge-base/isApp
+        /// <br/>See: https://developer.vippsmobilepay.com/docs/knowledge-base/user-flow
         /// </summary>
 
         [JsonPropertyName("isApp")]
@@ -363,7 +5176,7 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK: 1 kr = 100 øre.
         /// </summary>
 
         [JsonPropertyName("price")]
@@ -452,8 +5265,7 @@ namespace Vipps.net.Models.Recurring
         public InitialChargeV3 InitialCharge { get; set; }
 
         [JsonPropertyName("interval")]
-        [Required]
-        public TimePeriod Interval { get; set; } = new TimePeriod();
+        public TimePeriod Interval { get; set; }
 
         /// <summary>
         /// This optional parameter indicates whether payment request is triggered from
@@ -461,7 +5273,7 @@ namespace Vipps.net.Models.Recurring
         /// <br/>redirect URL for Vipps MobilePay landing page or deeplink URL to connect vipps
         /// <br/>App. When isApp is set to true, URLs passed to us will not be
         /// <br/>validated as regular URLs.
-        /// <br/>See: https://developer.vippsmobilepay.com/docs/knowledge-base/isApp
+        /// <br/>See: https://developer.vippsmobilepay.com/docs/knowledge-base/user-flow
         /// </summary>
 
         [JsonPropertyName("isApp")]
@@ -477,10 +5289,10 @@ namespace Vipps.net.Models.Recurring
         /// <br/>not with username and password.
         /// <br/>We do not have any specific requirements for the security of the page other than requiring HTTPS.
         /// <br/>Only HTTPS scheme is allowed. 
+        /// <br/>This URL is required for Norwegian Merchants.
         /// </summary>
 
         [JsonPropertyName("merchantAgreementUrl")]
-        [Required(AllowEmptyStrings = true)]
         [StringLength(1024)]
         public string MerchantAgreementUrl { get; set; }
 
@@ -492,7 +5304,7 @@ namespace Vipps.net.Models.Recurring
 
         [JsonPropertyName("merchantRedirectUrl")]
         [Required(AllowEmptyStrings = true)]
-        [StringLength(1024)]
+        [StringLength(2048)]
         public string MerchantRedirectUrl { get; set; }
 
         /// <summary>
@@ -554,14 +5366,10 @@ namespace Vipps.net.Models.Recurring
         [RegularExpression(@"^.{1,64}$")]
         public string ExternalId { get; set; }
 
-        /// <summary>
-        /// An optional country code for the agreement according to ISO 3166-2 (two capital letters)
-        /// </summary>
-
         [JsonPropertyName("countryCode")]
         [RegularExpression(@"^[A-Z]{2}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public DraftAgreementV3CountryCode CountryCode { get; set; }
+        public CountryCode CountryCode { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
 
@@ -630,7 +5438,7 @@ namespace Vipps.net.Models.Recurring
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial record DraftAgreementResponseV3
+    public partial class DraftAgreementResponseV3
     {
         /// <summary>
         /// Id of a an agreement which user may agree to.
@@ -721,7 +5529,7 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK: 1 kr = 100 øre.
         /// </summary>
 
         [JsonPropertyName("price")]
@@ -796,7 +5604,7 @@ namespace Vipps.net.Models.Recurring
         public string UserinfoUrl { get; set; }
 
         [JsonPropertyName("variableAmount")]
-        public VariableAmountResponse VariableAmount { get; set; }
+        public VariableAmountResponseV2 VariableAmount { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
 
@@ -810,7 +5618,7 @@ namespace Vipps.net.Models.Recurring
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial record AgreementResponseV3
+    public partial class AgreementResponseV3
     {
 
         [JsonPropertyName("campaign")]
@@ -931,15 +5739,11 @@ namespace Vipps.net.Models.Recurring
         [RegularExpression(@"^.{1,64}$")]
         public string ExternalId { get; set; }
 
-        /// <summary>
-        /// An optional country code for the agreement according to ISO 3166-2 (two capital letters)
-        /// </summary>
-
         [JsonPropertyName("countryCode")]
         [Required(AllowEmptyStrings = true)]
         [RegularExpression(@"^[A-Z]{2}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public AgreementResponseV3CountryCode CountryCode { get; set; }
+        public CountryCode CountryCode { get; set; }
 
         /// <summary>
         /// UUID (RFC 4122) representation of ID
@@ -978,7 +5782,7 @@ namespace Vipps.net.Models.Recurring
         /// The suggested max amount that the customer should choose.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK: 1 kr = 100 øre.
         /// </summary>
 
         [JsonPropertyName("suggestedMaxAmount")]
@@ -992,7 +5796,7 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement.
         /// <br/>
         /// <br/>Price is specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK: 1 kr = 100 øre.
         /// </summary>
 
         [JsonPropertyName("price")]
@@ -1110,6 +5914,7 @@ namespace Vipps.net.Models.Recurring
         /// <br/>
         /// <br/>The interval is specified by the `type` and `period` properties.
         /// <br/>When the type is `RECURRING`, then the property `period` is required.
+        /// <br/>When the type is `FLEXIBLE`, then the property `period` is not allowed.
         /// </summary>
 
         [JsonPropertyName("interval")]
@@ -1151,13 +5956,13 @@ namespace Vipps.net.Models.Recurring
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class VariableAmount
+    public partial class VariableAmountV2
     {
         /// <summary>
         /// The suggested max amount that the customer should choose.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("suggestedMaxAmount")]
@@ -1176,13 +5981,13 @@ namespace Vipps.net.Models.Recurring
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class VariableAmountResponse
+    public partial class VariableAmountResponseV2
     {
         /// <summary>
         /// The suggested max amount that the customer should choose.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("suggestedMaxAmount")]
@@ -1192,7 +5997,7 @@ namespace Vipps.net.Models.Recurring
         /// The max amount chosen by the customer.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("maxAmount")]
@@ -1216,7 +6021,7 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement in the discount period.
         /// <br/>The lowering of the price will be displayed in-app.
         /// <br/>Price is specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("campaignPrice")]
@@ -1224,10 +6029,6 @@ namespace Vipps.net.Models.Recurring
 
         /// <summary>
         /// The date and time the campaign ends.
-        /// <br/>This is a required field for `EVENT_CAMPAIGN`, and is illegal for other types.
-        /// <br/>But: If you add this type of info, you also need to add that interval
-        /// <br/>and end is used by `FULL_FLEX_CAMPAIGN` and that period is used by `PERIOD_CAMPAIGN`, etc.
-        /// <br/>Must be UTC.
         /// </summary>
 
         [JsonPropertyName("end")]
@@ -1251,7 +6052,7 @@ namespace Vipps.net.Models.Recurring
         /// <summary>
         /// The price of the agreement in the discount period. The lowering of the price will be displayed in-app.
         /// <br/>Price is specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK: 1 kr = 100 øre.
         /// </summary>
 
         [JsonPropertyName("campaignPrice")]
@@ -1284,7 +6085,6 @@ namespace Vipps.net.Models.Recurring
 
     }
 
-    [JsonInheritanceConverter(typeof(CampaignV3), "type")]
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CampaignV3
     {
@@ -1316,7 +6116,7 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement in the discount period. The lowering of the price will be displayed in-app.
         /// <br/>
         /// <br/>Price is specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("price")]
@@ -1358,7 +6158,7 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement in the discount period. The lowering of the price will be displayed in-app.
         /// <br/>
         /// <br/>Price is specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("price")]
@@ -1395,7 +6195,7 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement in the discount period. The lowering of the price will be displayed in-app.
         /// <br/>
         /// <br/>Price is specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("price")]
@@ -1416,52 +6216,6 @@ namespace Vipps.net.Models.Recurring
         [JsonPropertyName("eventText")]
         [Required(AllowEmptyStrings = true)]
         public string EventText { get; set; }
-
-        private IDictionary<string, object> _additionalProperties;
-
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FullFlexCampaignV3
-    {
-        /// <summary>
-        /// The type of campaign. This decides which properties are required
-        /// </summary>
-
-        [JsonPropertyName("type")]
-        [Required(AllowEmptyStrings = true)]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public FullFlexCampaignV3Type Type { get; set; }
-
-        /// <summary>
-        /// The price of the agreement in the discount period. The lowering of the price will be displayed in-app.
-        /// <br/>
-        /// <br/>Price is specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
-        /// </summary>
-
-        [JsonPropertyName("price")]
-        public int Price { get; set; }
-
-        [JsonPropertyName("interval")]
-        [Required]
-        public TimePeriod Interval { get; set; } = new TimePeriod();
-
-        /// <summary>
-        /// The date and time the campaign ends.
-        /// <br/>Needs to be UTC.
-        /// </summary>
-
-        [JsonPropertyName("end")]
-        [Required(AllowEmptyStrings = true)]
-        public string End { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
 
@@ -1505,7 +6259,7 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement in the discount period. The lowering of the price will be displayed in-app.
         /// <br/>
         /// <br/>Price is specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("price")]
@@ -1558,7 +6312,7 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement in the discount period. The lowering of the price will be displayed in-app.
         /// <br/>
         /// <br/>Price is specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("price")]
@@ -1599,59 +6353,6 @@ namespace Vipps.net.Models.Recurring
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class FullFlexCampaignResponseV3
-    {
-        /// <summary>
-        /// The type of campaign. This decides which properties are required
-        /// </summary>
-
-        [JsonPropertyName("type")]
-        [Required(AllowEmptyStrings = true)]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public FullFlexCampaignResponseV3Type Type { get; set; }
-
-        /// <summary>
-        /// The price of the agreement in the discount period. The lowering of the price will be displayed in-app.
-        /// <br/>
-        /// <br/>Price is specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
-        /// </summary>
-
-        [JsonPropertyName("price")]
-        public int Price { get; set; }
-
-        /// <summary>
-        /// The date and time the campaign ends.
-        /// <br/>Needs to be UTC.
-        /// </summary>
-
-        [JsonPropertyName("end")]
-        [Required(AllowEmptyStrings = true)]
-        public string End { get; set; }
-
-        [JsonPropertyName("interval")]
-        [Required]
-        public TimePeriod Interval { get; set; } = new TimePeriod();
-
-        /// <summary>
-        /// The text displayed in the Vipps or MobilePay app to explain the campaign to the user
-        /// </summary>
-
-        [JsonPropertyName("explanation")]
-        public string Explanation { get; set; }
-
-        private IDictionary<string, object> _additionalProperties;
-
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
-            set { _additionalProperties = value; }
-        }
-
-    }
-
-    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class LegacyCampaignResponseV3
     {
         /// <summary>
@@ -1667,7 +6368,7 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement in the discount period. The lowering of the price will be displayed in-app.
         /// <br/>
         /// <br/>Price is specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("price")]
@@ -1722,22 +6423,26 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement, required if type is LEGACY or not present.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("amount")]
         [Range(100, int.MaxValue)]
-        public int? Amount { get; set; }
+        public int Amount { get; set; }
 
         /// <summary>
         /// The suggested max amount that the customer should choose, required if type is VARIABLE.
+        /// <br/>There are limits for each currency:
+        /// <br/>- NOK: 20 000 kr (2000000 øre)
+        /// <br/>- DKK: 300 000 kr (30000000 øre)
+        /// <br/>- EUR: 2 000 Euro (200000 cent)
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("suggestedMaxAmount")]
-        [Range(100, 2000000)]
+        [Range(100, int.MaxValue)]
         public int SuggestedMaxAmount { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1783,13 +6488,13 @@ namespace Vipps.net.Models.Recurring
         [StringLength(3, MinimumLength = 3)]
         [RegularExpression(@"^[A-Z]{3}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Currency Currency { get; set; }
+        public CurrencyV3 Currency { get; set; }
 
         /// <summary>
         /// The suggested max amount that the customer should choose, present if type is VARIABLE.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("suggestedMaxAmount")]
@@ -1799,7 +6504,7 @@ namespace Vipps.net.Models.Recurring
         /// The max amount chosen by the customer.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.       
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.       
         /// </summary>
 
         [JsonPropertyName("maxAmount")]
@@ -1823,7 +6528,7 @@ namespace Vipps.net.Models.Recurring
         /// The price of the agreement, can only be updated if agreement type is LEGACY
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("amount")]
@@ -1831,14 +6536,18 @@ namespace Vipps.net.Models.Recurring
         public int Amount { get; set; }
 
         /// <summary>
-        /// The suggested max amount that the customer should choose, can only be updated if agreement type is VARIABLE.
+        /// The suggested max amount that the customer should choose, required if type is VARIABLE.
+        /// <br/>There are limits for each currency:
+        /// <br/>- NOK: 20 000 kr (2000000 øre)
+        /// <br/>- DKK: 300 000 kr (30000000 øre)
+        /// <br/>- EUR: 2 000 Euro (200000 cent)
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("suggestedMaxAmount")]
-        [Range(100, 2000000)]
+        [Range(100, int.MaxValue)]
         public int SuggestedMaxAmount { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -1863,7 +6572,7 @@ namespace Vipps.net.Models.Recurring
         /// The amount that must be paid or approved before starting the agreement.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK: 1 kr = 100 øre.
         /// </summary>
 
         [JsonPropertyName("amount")]
@@ -1925,7 +6634,7 @@ namespace Vipps.net.Models.Recurring
         /// The amount that must be paid or approved before starting the agreement.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("amount")]
@@ -1936,7 +6645,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("description")]
-        [Required(AllowEmptyStrings = true)]
+        [Required]
+        [StringLength(100, MinimumLength = 1)]
         public string Description { get; set; }
 
         /// <summary>
@@ -1987,7 +6697,7 @@ namespace Vipps.net.Models.Recurring
         /// Amount to be paid by the customer.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK: 1 kr = 100 øre.
         /// </summary>
 
         [JsonPropertyName("amount")]
@@ -2006,7 +6716,8 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("description")]
-        [Required(AllowEmptyStrings = true)]
+        [Required]
+        [StringLength(45, MinimumLength = 1)]
         public string Description { get; set; }
 
         /// <summary>
@@ -2036,6 +6747,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("orderId")]
+        [StringLength(50)]
         [RegularExpression(@"^[a-zA-Z\d-]+")]
         public string OrderId { get; set; }
 
@@ -2057,7 +6769,7 @@ namespace Vipps.net.Models.Recurring
         /// Amount to be paid by the customer.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("amount")]
@@ -2069,12 +6781,17 @@ namespace Vipps.net.Models.Recurring
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public TransactionType TransactionType { get; set; }
 
+        [JsonPropertyName("type")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public ChargeCreationTypeV3 Type { get; set; }
+
         /// <summary>
         /// This field is visible to the end user in-app
         /// </summary>
 
         [JsonPropertyName("description")]
-        [Required(AllowEmptyStrings = true)]
+        [Required]
+        [StringLength(100, MinimumLength = 1)]
         public string Description { get; set; }
 
         /// <summary>
@@ -2087,16 +6804,19 @@ namespace Vipps.net.Models.Recurring
         /// <br/>If the charge is `RESERVE_CAPTURE`, the charge is `RESERVED` on `due` date.
         /// <br/>
         /// <br/>Must be in the format `YYYY-MM-DD` and ISO 8601.
+        /// <br/>
+        /// <br/>Required only for `RECURRING` charges
         /// </summary>
 
         [JsonPropertyName("due")]
-        [Required(AllowEmptyStrings = true)]
         public string Due { get; set; }
 
         /// <summary>
         /// The service will attempt to charge the customer for the number of days
         /// <br/>specified in `retryDays` after the `due` date.
         /// <br/>We recommend at least two days retry.
+        /// <br/>
+        /// <br/>Required only for `RECURRING` charges
         /// </summary>
 
         [JsonPropertyName("retryDays")]
@@ -2140,6 +6860,197 @@ namespace Vipps.net.Models.Recurring
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateChargeAsyncV3
+    {
+        /// <summary>
+        /// Id of a an agreement which user may agree to.
+        /// <br/>Initially the agreement is in a pending state waiting for user approval.
+        /// <br/>It enters active state once the user has approved it in the Vipps or MobilePay app
+        /// </summary>
+
+        [JsonPropertyName("agreementId")]
+        [Required(AllowEmptyStrings = true)]
+        public string AgreementId { get; set; }
+
+        /// <summary>
+        /// Amount to be paid by the customer.
+        /// <br/>
+        /// <br/>Amounts are specified in minor units.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
+        /// </summary>
+
+        [JsonPropertyName("amount")]
+        [Range(100, int.MaxValue)]
+        public int Amount { get; set; }
+
+        [JsonPropertyName("transactionType")]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public TransactionType TransactionType { get; set; }
+
+        /// <summary>
+        /// This field is visible to the end user in-app
+        /// </summary>
+
+        [JsonPropertyName("description")]
+        [Required]
+        [StringLength(100, MinimumLength = 1)]
+        public string Description { get; set; }
+
+        /// <summary>
+        /// The date when the charge is due to be processed.
+        /// <br/>
+        /// <br/>Must be at least two days in advance in the production environment,
+        /// <br/>and at least one day in the test environment.
+        /// <br/>
+        /// <br/>If the charge is `DIRECT_CAPTURE`, the charge is processed and charged on the `due` date.
+        /// <br/>If the charge is `RESERVE_CAPTURE`, the charge is `RESERVED` on `due` date.
+        /// <br/>
+        /// <br/>Must be in the format `YYYY-MM-DD` and ISO 8601.
+        /// </summary>
+
+        [JsonPropertyName("due")]
+        [Required(AllowEmptyStrings = true)]
+        public string Due { get; set; }
+
+        /// <summary>
+        /// The service will attempt to charge the customer for the number of days
+        /// <br/>specified in `retryDays` after the `due` date.
+        /// <br/>We recommend at least two days retry.
+        /// </summary>
+
+        [JsonPropertyName("retryDays")]
+        [Range(0, 14)]
+        public int RetryDays { get; set; }
+
+        /// <summary>
+        /// This will be the `chargeId` for this charge.
+        /// <br/>This is the unique identifier of the payment, from the payment is initiated and all the way to the settlement data.
+        /// <br/>See: https://developer.vippsmobilepay.com/docs/knowledge-base/orderid/
+        /// </summary>
+
+        [JsonPropertyName("orderId")]
+        [Required]
+        [StringLength(50, MinimumLength = 1)]
+        [RegularExpression(@"^[a-zA-Z\d-]+")]
+        public string OrderId { get; set; }
+
+        /// <summary>
+        /// An optional external ID for the charge, that takes the place of the `orderId` in settlement reports without overriding the default `chargeId`
+        /// <br/>The `externalId` can be used by the merchant to map the `chargeId` to an ID in a subscription system or similar.
+        /// <br/>Note that while `orderId` must be unique per merchant, `externalId` does not have this limitation, 
+        /// <br/>so you need to avoid assigning the same `externalId` to multiple charges if you want to keep them separate in settlement reports.
+        /// </summary>
+
+        [JsonPropertyName("externalId")]
+        [StringLength(64, MinimumLength = 1)]
+        [RegularExpression(@"^.{1,64}$")]
+        public string ExternalId { get; set; }
+
+        private IDictionary<string, object> _additionalProperties;
+
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class AsyncChargeResponse
+    {
+
+        [JsonPropertyName("invalidCharges")]
+        [Required]
+        public ICollection<InvalidChargeResponse> InvalidCharges { get; set; } = new Collection<InvalidChargeResponse>();
+
+        [JsonPropertyName("validCharges")]
+        [Required]
+        public ICollection<string> ValidCharges { get; set; } = new Collection<string>();
+
+        private IDictionary<string, object> _additionalProperties;
+
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class InvalidChargeResponse
+    {
+
+        [JsonPropertyName("chargeBatchItemDto")]
+        [Required]
+        public ChargeBatchItemDto ChargeBatchItemDto { get; set; } = new ChargeBatchItemDto();
+
+        [JsonPropertyName("errors")]
+        [Required]
+        public ICollection<string> Errors { get; set; } = new Collection<string>();
+
+        private IDictionary<string, object> _additionalProperties;
+
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ChargeBatchItemDto
+    {
+
+        [JsonPropertyName("due")]
+        [Required(AllowEmptyStrings = true)]
+        public string Due { get; set; }
+
+        [JsonPropertyName("retryDays")]
+        public int RetryDays { get; set; }
+
+        [JsonPropertyName("amount")]
+        public int Amount { get; set; }
+
+        [JsonPropertyName("description")]
+        [Required(AllowEmptyStrings = true)]
+        public string Description { get; set; }
+
+        [JsonPropertyName("transactionType")]
+        [Required(AllowEmptyStrings = true)]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public ChargeBatchItemDtoTransactionType TransactionType { get; set; }
+
+        [JsonPropertyName("orderId")]
+        [Required]
+        [StringLength(50, MinimumLength = 1)]
+        [RegularExpression(@"^[a-zA-Z\d-]+")]
+        public string OrderId { get; set; }
+
+        [JsonPropertyName("agreementId")]
+        public string AgreementId { get; set; }
+
+        [JsonPropertyName("externalId")]
+        public string ExternalId { get; set; }
+
+        private IDictionary<string, object> _additionalProperties;
+
+        [JsonExtensionData]
+        public IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties ?? (_additionalProperties = new Dictionary<string, object>()); }
+            set { _additionalProperties = value; }
+        }
+
+    }
+
+    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class ChargeReference
     {
         /// <summary>
@@ -2168,7 +7079,7 @@ namespace Vipps.net.Models.Recurring
         /// Amount to be paid by the customer.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK: 1 kr = 100 øre.
         /// </summary>
 
         [JsonPropertyName("amount")]
@@ -2178,7 +7089,7 @@ namespace Vipps.net.Models.Recurring
         /// The total amount which has been refunded, in case of status refund/partial refund.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK: 1 kr = 100 øre.
         /// </summary>
 
         [JsonPropertyName("amountRefunded")]
@@ -2227,7 +7138,7 @@ namespace Vipps.net.Models.Recurring
         [JsonPropertyName("type")]
         [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public ChargeType Type { get; set; }
+        public ChargeTypeV2 Type { get; set; }
 
         /// <summary>
         /// Identifies the reason why the charged has been marked as `FAILED`:
@@ -2273,7 +7184,7 @@ namespace Vipps.net.Models.Recurring
         /// Amount to be paid by the customer.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("amount")]
@@ -2284,7 +7195,7 @@ namespace Vipps.net.Models.Recurring
         [StringLength(3, MinimumLength = 3)]
         [RegularExpression(@"^[A-Z]{3}$")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Currency Currency { get; set; }
+        public CurrencyV3 Currency { get; set; }
 
         /// <summary>
         /// Description of the charge
@@ -2370,7 +7281,7 @@ namespace Vipps.net.Models.Recurring
         [JsonPropertyName("type")]
         [Required(AllowEmptyStrings = true)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public ChargeType Type { get; set; }
+        public ChargeTypeV3 Type { get; set; }
 
         [JsonPropertyName("transactionType")]
         [Required(AllowEmptyStrings = true)]
@@ -2429,7 +7340,7 @@ namespace Vipps.net.Models.Recurring
         /// The amount to refund on a captured/charged charge.
         /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("amount")]
@@ -2441,7 +7352,7 @@ namespace Vipps.net.Models.Recurring
         /// </summary>
 
         [JsonPropertyName("description")]
-        [Required(AllowEmptyStrings = true)]
+        [Required]
         public string Description { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -2460,9 +7371,8 @@ namespace Vipps.net.Models.Recurring
     {
         /// <summary>
         /// The amount to capture on a reserved charge.
-        /// <br/>
         /// <br/>Amounts are specified in minor units.
-        /// <br/>For Norwegian kroner (NOK) that means 1 kr = 100 øre. Example: 499 kr = 49900 øre.
+        /// <br/>NOK and DKK: 1 kr = 100 øre. EUR: 1 Euro = 100 cent.
         /// </summary>
 
         [JsonPropertyName("amount")]
@@ -2470,11 +7380,12 @@ namespace Vipps.net.Models.Recurring
         public int Amount { get; set; }
 
         /// <summary>
-        /// A textual description of the operation, which will be displayed in the user's app.
+        /// Deprecated. Description in CreateChargeV3 is used instead.
         /// </summary>
 
         [JsonPropertyName("description")]
-        [Required(AllowEmptyStrings = true)]
+        [StringLength(100, MinimumLength = 1)]
+        [System.Obsolete]
         public string Description { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
@@ -2684,7 +7595,7 @@ namespace Vipps.net.Models.Recurring
     /// Error response using the Problem JSON format
     /// </summary>
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial record ErrorV3
+    public partial class ErrorV3
     {
         /// <summary>
         /// Path to type of error
@@ -2727,9 +7638,9 @@ namespace Vipps.net.Models.Recurring
 
         [JsonPropertyName("contextId")]
         public string ContextId { get; set; }
-        
+
         [JsonPropertyName("extraDetails")]
-        public List<ExtraDetails> ExtraDetails { get; set; }
+        public ExtraDetails ExtraDetails { get; set; }
 
         private IDictionary<string, object> _additionalProperties;
 
@@ -2798,24 +7709,6 @@ namespace Vipps.net.Models.Recurring
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum DraftAgreementV3CountryCode
-    {
-
-        [EnumMember(Value = @"NO")]
-        NO = 0,
-
-    }
-
-    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum AgreementResponseV3CountryCode
-    {
-
-        [EnumMember(Value = @"NO")]
-        NO = 0,
-
-    }
-
-    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum PatchAgreementV2Status
     {
 
@@ -2862,32 +7755,14 @@ namespace Vipps.net.Models.Recurring
         [EnumMember(Value = @"PRICE_CAMPAIGN")]
         PRICE_CAMPAIGN = 0,
 
-        [EnumMember(Value = @"PERIOD_CAMPAIGN")]
-        PERIOD_CAMPAIGN = 1,
-
-        [EnumMember(Value = @"EVENT_CAMPAIGN")]
-        EVENT_CAMPAIGN = 2,
-
-        [EnumMember(Value = @"FULL_FLEX_CAMPAIGN")]
-        FULL_FLEX_CAMPAIGN = 3,
-
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public enum PeriodCampaignV3Type
     {
 
-        [EnumMember(Value = @"PRICE_CAMPAIGN")]
-        PRICE_CAMPAIGN = 0,
-
         [EnumMember(Value = @"PERIOD_CAMPAIGN")]
-        PERIOD_CAMPAIGN = 1,
-
-        [EnumMember(Value = @"EVENT_CAMPAIGN")]
-        EVENT_CAMPAIGN = 2,
-
-        [EnumMember(Value = @"FULL_FLEX_CAMPAIGN")]
-        FULL_FLEX_CAMPAIGN = 3,
+        PERIOD_CAMPAIGN = 0,
 
     }
 
@@ -2895,35 +7770,8 @@ namespace Vipps.net.Models.Recurring
     public enum EventCampaignV3Type
     {
 
-        [EnumMember(Value = @"PRICE_CAMPAIGN")]
-        PRICE_CAMPAIGN = 0,
-
-        [EnumMember(Value = @"PERIOD_CAMPAIGN")]
-        PERIOD_CAMPAIGN = 1,
-
         [EnumMember(Value = @"EVENT_CAMPAIGN")]
-        EVENT_CAMPAIGN = 2,
-
-        [EnumMember(Value = @"FULL_FLEX_CAMPAIGN")]
-        FULL_FLEX_CAMPAIGN = 3,
-
-    }
-
-    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum FullFlexCampaignV3Type
-    {
-
-        [EnumMember(Value = @"PRICE_CAMPAIGN")]
-        PRICE_CAMPAIGN = 0,
-
-        [EnumMember(Value = @"PERIOD_CAMPAIGN")]
-        PERIOD_CAMPAIGN = 1,
-
-        [EnumMember(Value = @"EVENT_CAMPAIGN")]
-        EVENT_CAMPAIGN = 2,
-
-        [EnumMember(Value = @"FULL_FLEX_CAMPAIGN")]
-        FULL_FLEX_CAMPAIGN = 3,
+        EVENT_CAMPAIGN = 0,
 
     }
 
@@ -2940,9 +7788,6 @@ namespace Vipps.net.Models.Recurring
         [EnumMember(Value = @"EVENT_CAMPAIGN")]
         EVENT_CAMPAIGN = 2,
 
-        [EnumMember(Value = @"FULL_FLEX_CAMPAIGN")]
-        FULL_FLEX_CAMPAIGN = 3,
-
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -2957,9 +7802,6 @@ namespace Vipps.net.Models.Recurring
 
         [EnumMember(Value = @"EVENT_CAMPAIGN")]
         EVENT_CAMPAIGN = 2,
-
-        [EnumMember(Value = @"FULL_FLEX_CAMPAIGN")]
-        FULL_FLEX_CAMPAIGN = 3,
 
     }
 
@@ -2976,30 +7818,6 @@ namespace Vipps.net.Models.Recurring
         [EnumMember(Value = @"EVENT_CAMPAIGN")]
         EVENT_CAMPAIGN = 2,
 
-        [EnumMember(Value = @"FULL_FLEX_CAMPAIGN")]
-        FULL_FLEX_CAMPAIGN = 3,
-
-    }
-
-    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum FullFlexCampaignResponseV3Type
-    {
-
-        [EnumMember(Value = @"PRICE_CAMPAIGN")]
-        PRICE_CAMPAIGN = 0,
-
-        [EnumMember(Value = @"PERIOD_CAMPAIGN")]
-        PERIOD_CAMPAIGN = 1,
-
-        [EnumMember(Value = @"EVENT_CAMPAIGN")]
-        EVENT_CAMPAIGN = 2,
-
-        [EnumMember(Value = @"FULL_FLEX_CAMPAIGN")]
-        FULL_FLEX_CAMPAIGN = 3,
-
-        [EnumMember(Value = @"LEGACY_CAMPAIGN")]
-        LEGACY_CAMPAIGN = 4,
-
     }
 
     [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -3015,11 +7833,8 @@ namespace Vipps.net.Models.Recurring
         [EnumMember(Value = @"EVENT_CAMPAIGN")]
         EVENT_CAMPAIGN = 2,
 
-        [EnumMember(Value = @"FULL_FLEX_CAMPAIGN")]
-        FULL_FLEX_CAMPAIGN = 3,
-
         [EnumMember(Value = @"LEGACY_CAMPAIGN")]
-        LEGACY_CAMPAIGN = 4,
+        LEGACY_CAMPAIGN = 3,
 
     }
 
@@ -3032,6 +7847,9 @@ namespace Vipps.net.Models.Recurring
 
         [EnumMember(Value = @"VARIABLE")]
         VARIABLE = 1,
+
+        [EnumMember(Value = @"FLEXIBLE")]
+        FLEXIBLE = 2,
 
     }
 
@@ -3080,6 +7898,18 @@ namespace Vipps.net.Models.Recurring
 
         [EnumMember(Value = @"DIRECT_CAPTURE")]
         DIRECT_CAPTURE = 1,
+
+    }
+
+    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum ChargeBatchItemDtoTransactionType
+    {
+
+        [EnumMember(Value = @"DIRECT_CAPTURE")]
+        DIRECT_CAPTURE = 0,
+
+        [EnumMember(Value = @"RESERVE_CAPTURE")]
+        RESERVE_CAPTURE = 1,
 
     }
 
@@ -3206,137 +8036,9 @@ namespace Vipps.net.Models.Recurring
         [EnumMember(Value = @"RECURRING")]
         RECURRING = 0,
 
-    }
+        [EnumMember(Value = @"FLEXIBLE")]
+        FLEXIBLE = 1,
 
-    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    [System.AttributeUsage(System.AttributeTargets.Class | System.AttributeTargets.Interface, AllowMultiple = true)]
-    internal class JsonInheritanceAttribute : System.Attribute
-    {
-        public JsonInheritanceAttribute(string key, System.Type type)
-        {
-            Key = key;
-            Type = type;
-        }
-
-        public string Key { get; }
-
-        public System.Type Type { get; }
-    }
-
-    [GeneratedCode("NJsonSchema", "14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    internal class JsonInheritanceConverterAttribute : JsonConverterAttribute
-    {
-        public string DiscriminatorName { get; }
-
-        public JsonInheritanceConverterAttribute(System.Type baseType, string discriminatorName = "discriminator")
-            : base(typeof(JsonInheritanceConverter<>).MakeGenericType(baseType))
-        {
-            DiscriminatorName = discriminatorName;
-        }
-    }
-
-    public class JsonInheritanceConverter<TBase> : JsonConverter<TBase>
-    {
-        private readonly string _discriminatorName;
-
-        public JsonInheritanceConverter()
-        {
-            var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute<JsonInheritanceConverterAttribute>(typeof(TBase));
-            _discriminatorName = attribute?.DiscriminatorName ?? "discriminator";
-        }
-
-        public JsonInheritanceConverter(string discriminatorName)
-        {
-            _discriminatorName = discriminatorName;
-        }
-
-        public string DiscriminatorName { get { return _discriminatorName; } }
-
-        public override TBase Read(ref Utf8JsonReader reader, System.Type typeToConvert, JsonSerializerOptions options)
-        {
-            var document = JsonDocument.ParseValue(ref reader);
-            var hasDiscriminator = document.RootElement.TryGetProperty(_discriminatorName, out var discriminator);
-            var subtype = GetDiscriminatorType(document.RootElement, typeToConvert, hasDiscriminator ? discriminator.GetString() : null);
-
-            var bufferWriter = new System.IO.MemoryStream();
-            using (var writer = new Utf8JsonWriter(bufferWriter))
-            {
-                document.RootElement.WriteTo(writer);
-            }
-
-            return (TBase)JsonSerializer.Deserialize(bufferWriter.ToArray(), subtype, options);
-        }
-
-        public override void Write(Utf8JsonWriter writer, TBase value, JsonSerializerOptions options)
-        {
-            writer.WriteStartObject();
-            writer.WriteString(_discriminatorName, GetDiscriminatorValue(value.GetType()));
-
-            var bytes = JsonSerializer.SerializeToUtf8Bytes((object)value, options);
-            var document = JsonDocument.Parse(bytes);
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                property.WriteTo(writer);
-            }
-
-            writer.WriteEndObject();
-        }
-
-        public string GetDiscriminatorValue(System.Type type)
-        {
-            var jsonInheritanceAttributeDiscriminator = GetSubtypeDiscriminator(type);
-            if (jsonInheritanceAttributeDiscriminator != null)
-            {
-                return jsonInheritanceAttributeDiscriminator;
-            }
-
-            return type.Name;
-        }
-
-        protected System.Type GetDiscriminatorType(JsonElement jObject, System.Type objectType, string discriminatorValue)
-        {
-            var jsonInheritanceAttributeSubtype = GetObjectSubtype(objectType, discriminatorValue);
-            if (jsonInheritanceAttributeSubtype != null)
-            {
-                return jsonInheritanceAttributeSubtype;
-            }
-
-            if (objectType.Name == discriminatorValue)
-            {
-                return objectType;
-            }
-
-            var typeName = objectType.Namespace + "." + discriminatorValue;
-            var subtype = System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType).Assembly.GetType(typeName);
-            if (subtype != null)
-            {
-                return subtype;
-            }
-
-            throw new System.InvalidOperationException("Could not find subtype of '" + objectType.Name + "' with discriminator '" + discriminatorValue + "'.");
-        }
-
-        private System.Type GetObjectSubtype(System.Type objectType, string discriminator)
-        {
-            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
-            {
-                if (attribute.Key == discriminator)
-                    return attribute.Type;
-            }
-
-            return objectType;
-        }
-
-        private string GetSubtypeDiscriminator(System.Type objectType)
-        {
-            foreach (var attribute in System.Reflection.CustomAttributeExtensions.GetCustomAttributes<JsonInheritanceAttribute>(System.Reflection.IntrospectionExtensions.GetTypeInfo(objectType), true))
-            {
-                if (attribute.Type == objectType)
-                    return attribute.Key;
-            }
-
-            return objectType.Name;
-        }
     }
 
 
