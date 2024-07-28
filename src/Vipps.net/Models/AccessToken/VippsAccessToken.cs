@@ -1,28 +1,28 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Vipps.net.Models.AccessToken
 {
     public class AccessToken
     {
-        [property: JsonProperty("token_type")]
+        [property: JsonPropertyName("token_type")]
         public string TokenType { get; set; }
 
-        [property: JsonProperty("expires_in")]
+        [property: JsonPropertyName("expires_in")]
         public string ExpiresIn { get; set; }
 
-        [property: JsonProperty("ext_expires_in")]
+        [property: JsonPropertyName("ext_expires_in")]
         public string ExtExpiresIn { get; set; }
 
-        [property: JsonProperty("expires_on")]
+        [property: JsonPropertyName("expires_on")]
         public string ExpiresOn { get; set; }
 
-        [property: JsonProperty("not_before")]
+        [property: JsonPropertyName("not_before")]
         public string NotBefore { get; set; }
 
-        [property: JsonProperty("resource")]
+        [property: JsonPropertyName("resource")]
         public string Resource { get; set; }
 
-        [property: JsonProperty("access_token")]
+        [property: JsonPropertyName("access_token")]
         public string Token { get; set; }
     }
 }

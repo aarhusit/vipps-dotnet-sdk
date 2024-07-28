@@ -1,25 +1,25 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Vipps.net.Helpers
 {
     internal static class VippsRequestSerializer
     {
-        private static readonly JsonSerializerSettings _jsonSerializerSettings =
-            new JsonSerializerSettings()
+        private static readonly JsonSerializerOptions JsonSerializerSettings =
+            new()
             {
-                NullValueHandling = NullValueHandling.Ignore,
-                DefaultValueHandling = DefaultValueHandling.Include,
-                Converters = new[] { new Newtonsoft.Json.Converters.StringEnumConverter() }
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                Converters =
+                {
+                    new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+                }
             };
 
         internal static string SerializeVippsRequest<T>(T vippsRequest)
             where T : class
         {
-            string serializedRequest = JsonConvert.SerializeObject(
-                vippsRequest,
-                vippsRequest.GetType(),
-                _jsonSerializerSettings
-            );
+            string serializedRequest = JsonSerializer.Serialize(vippsRequest, JsonSerializerSettings);
+
             return serializedRequest;
         }
 
@@ -28,15 +28,11 @@ namespace Vipps.net.Helpers
         {
             try
             {
-                var deserializedTyped = JsonConvert.DeserializeObject<T>(
+                var deserializedTyped = JsonSerializer.Deserialize<T>(
                     vippsResponse,
-                    _jsonSerializerSettings
+                    JsonSerializerSettings
                 );
-                return deserializedTyped is null
-                    ? throw new Exceptions.VippsTechnicalException(
-                        $"Response could not be deserialized to {nameof(T)}"
-                    )
-                    : deserializedTyped;
+                return deserializedTyped ?? throw new Exceptions.VippsTechnicalException($"Response could not be deserialized to {nameof(T)}");
             }
             catch (Exceptions.VippsBaseException)
             {
@@ -44,10 +40,7 @@ namespace Vipps.net.Helpers
             }
             catch (System.Exception ex)
             {
-                throw new Exceptions.VippsTechnicalException(
-                    $"Error deserializing response of type {nameof(T)}",
-                    ex
-                );
+                throw new Exceptions.VippsTechnicalException($"Error deserializing response of type {nameof(T)}",ex);
             }
         }
     }

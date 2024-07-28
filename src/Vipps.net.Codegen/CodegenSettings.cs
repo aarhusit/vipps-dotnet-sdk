@@ -1,33 +1,34 @@
-﻿using NSwag.CodeGeneration.CSharp;
+﻿using NJsonSchema.CodeGeneration.CSharp;
+using NSwag.CodeGeneration.CSharp;
 
 namespace Vipps.net.Codegen
 {
     internal sealed class CodegenSettings
     {
-        internal string OpenApiUrl { get; init; }
+        internal string OpenApiUrl => $"https://developer.vippsmobilepay.com/redocusaurus/{Name?.ToLowerInvariant()}-swagger-id.yaml";
+        internal string? Name { get; init; }
         internal string RelativeFilePath { get; init; }
         internal CSharpClientGeneratorSettings ClientGeneratorSettings { get; init; }
-
         internal CodegenSettings(
-            string openApiJsonPath,
-            string className,
-            string baseNamespace,
+            string name,
             string relativeFilePath
         )
         {
-            OpenApiUrl = openApiJsonPath;
-            RelativeFilePath = relativeFilePath;
+            Name = name;
+            RelativeFilePath = Path.Combine(relativeFilePath);
             ClientGeneratorSettings = new CSharpClientGeneratorSettings
             {
-                ClassName = className,
+                ClassName = $"Vipps{name}",
                 GenerateClientClasses = false,
                 GeneratePrepareRequestAndProcessResponseAsAsyncMethods = false,
                 CSharpGeneratorSettings =
                 {
-                    Namespace = baseNamespace,
+                    Namespace = $"Vipps.net.Models.{name}",
                     TypeAccessModifier = "public",
-                    GenerateDataAnnotations = true,
+                    GenerateDataAnnotations = false,
                     GenerateDefaultValues = true,
+                    JsonLibrary = CSharpJsonLibrary.SystemTextJson
+
                 },
                 GenerateExceptionClasses = false,
                 GenerateBaseUrlProperty = false,
